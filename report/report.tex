@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+
+% essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+
+% other packages
+\usepackage{packages}
+
+% Pour le glossaire
+% \usepackage[toc, automake, acronym]{glossaries}
+% \makeglossaries
+
+\title{Report Title}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Notations}
+
+\begin{bulletlist}
+  \item $k\in \{1, 2, 3\}$
+  \item $R^{capt} \leq R^{com}$
+  \item $T$ ensemble des cibles (targets), de cardinal $n$
+  \begin{itemize}
+    \item[$\rightarrow$] $t\in T$, coordonnées $(x_t, y_t)$
+    \item[$\rightarrow$] $t, t'\in T, t\neq t', \Delta_{t, t'} = \sqrt{(x_t - x_{t'})^2 + (y_t - y_{t'})^2}$
+  \end{itemize}
+  \item puit $s$ de coordonnées $(x_s, y_s)$
+  \item $E^{capt} = \{(t, t')\in T^2 | t\neq t', \Delta_{t, t'} \leq R^{capt}\}$
+  \begin{itemize}
+    \item[$\rightarrow$] $E^{capt}_t = \{t'\in T | (t, t')\in E^{capt}\}$
+    \item[$\rightarrow$] \textbf{Graphe de captation} : \fbox{$G^{capt} = (T, E^{capt})$} 
+  \end{itemize}
+  \item $E^{com} = \{ (t, t')\in (T \cup \{ s \})^2 | t\neq t', \Delta_{t, t'} \leq R^{com} \}$
+  \begin{itemize}
+    \item[$\rightarrow$] $E^{com}_t = \{t'\in T | (t, t')\in E^{com}\}$
+    \item[$\rightarrow$] \textbf{Graphe de communication}  :\fbox{$G^{com} = (T \cup \{s\}, E^{com})$}
+    \item[$\rightarrow$] On note $\mathcal{D}(E^{com})$ l'ensemble des arrêtes orientées contenant les $(t, t')$ et $(t', t)$.
+  \end{itemize}
+  \item $\forall t\in T,\, \delta_t = \1_{\text{capteur sur la cible } t}$
+  \item $\forall e\in E^{com},\, x_e = \1_{e \text{ dans l'arbre de communication}}$
+\end{bulletlist}
+
+\section{Modèle PLNE}
+
+Variables de décision :
+\begin{bulletlist}
+  \item $\forall t\in T,\, \delta_t = \1_{\text{capteur sur la cible } t}$
+  \item $\forall e\in E^{com},\, x_e = \1_{e \text{ dans l'arbre de communication}}$
+\end{bulletlist}
+
+\begin{minie}|s|[2]
+  {\delta, x, f}
+  {\sum\limits_{t\in T}\delta_t \label{objectiveReference}}
+  {\label{problemReference}}  
+  {}%{v^*(\delta, x, f) = }
+  \addConstraint{\sum\limits_{t'\in E^{capt}_t} \delta_{t'}}{\geq k, }{\forall t\in T}\label{k-connex}
+  \addConstraint{\sum\limits_{e\in E^{com}}x_e}{= n}{}
+  \addConstraint{x_e}{\leq \delta_t, }{\forall e=(t, t')\in E^{com}}
+  \addConstraint{x_e}{\leq \delta_{t'}, }{\forall e=(t, t')\in E^{com}}
+  \addConstraint{x_e}{\geq \delta_t + \delta_{t'} - 1, }{\forall e=(t, t')\in E^{com}}
+  \addConstraint{\sum\limits_{i\in E^{com}_t}f^t_{(i, t)} - \sum\limits_{j\in E^{com}_t}f^t_{(t, j)}}{= 1, \quad}{\forall t\in T}
+  \addConstraint{\sum\limits_{j\in E^{com}_s}f^t_{(s, j)} - \sum\limits_{i\in E^{com}_s}f^t_{(i, s)}}{= 1, \quad}{\forall t\in T}
+  \addConstraint{\sum\limits_{i\in E^{com}_{t'}}f^t_{(i, t')} - \sum\limits_{j\in E^{com}_{t'}}f^t_{(t', j)}}{= 0, \quad}{\forall t\in T, \forall t'\in T\backslash\{t\}}
+  \addConstraint{f_{(i, j)}^t + f_{(j, i)}^{t'}}{\leq x_e, }{\forall e=(i, j)\in E^{com},\, \forall t, t'\in T}
+  \addConstraint{\delta_t}{\in\{0, 1\}, }{\forall t\in T}
+  \addConstraint{x_e}{\in\{0, 1\}, }{\forall e\in E^{com}}
+  \addConstraint{f^t_a}{\geq 0, }{\forall t\in T,\, \forall a\in \mathcal{D}(E^{com})}
+\end{minie}
+
+\todo{note: $x_a\in \bbN$ est équivalent}
+
+
+\begin{bulletlist}
+  \item k-connexité : contrainte \ref{k-connex}
+\end{bulletlist}
+
+\end{document}

@@ -1,0 +1,146 @@
+%\usepackage{chngcntr}
+%\counterwithin*{section}{part}
+
+% custom margin sizes
+\textwidth=18cm
+\textheight=23cm
+\oddsidemargin=-1.00cm
+\evensidemargin=-1.00cm
+\parindent=1cm
+\topmargin=-2cm
+
+\usepackage{graphicx}  % adds \includegraphics command
+\usepackage{float}  % adds [H] float option in figures
+\usepackage{color}  % enable colors defining
+% colors
+\usepackage[table,xcdraw]{xcolor} % colored tables
+\definecolor{purple}{rgb}{0.6, 0.4, 0.8}
+\definecolor{amber}{rgb}{1.0, 0.49, 0.0}
+
+\usepackage{multicol}  % enables multicols environments
+\setlength{\columnseprule}{1pt}  % Separator ruler width
+\def\columnseprulecolor{\color{black}}  % Separator ruler colour
+
+% For "todo" notes (attention, ne pas changer de place)
+\usepackage[colorinlistoftodos,textsize=scriptsize]{todonotes}
+
+\usepackage{enumitem}  % itemize/enumerate
+% define itemize with default bullet points instead of -
+\newlist{bulletlist}{itemize}{1}
+\setlist[bulletlist]{label=\textbullet}
+
+% Pour les annexes
+\usepackage{appendix}
+
+% for subsubsubsections
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% clickable links
+\usepackage{hyperref}
+
+\usepackage{csvsimple} % import csv files to tables
+\usepackage{subfig}  % subfloat in figures
+
+%% Maths
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+% raccourci pour les intervalles entiers
+\usepackage{stmaryrd}  % for llbracket and rrbracket
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+% write optimization problems
+\usepackage[nocomma, short]{optidef}
+
+% fonction indicatrice
+\usepackage{dsfont}
+\newcommand{\1}{\mathds{1}}
+
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+
+\newcommand{\tone}{t^{(1)}}
+\newcommand{\ttwo}{t^{(2)}}
+\newcommand{\xone}{x^{(1)}}
+\newcommand{\xtwo}{x^{(2)}}
+\newcommand{\yone}{y^{(1)}}
+\newcommand{\ytwo}{y^{(2)}}
+\newcommand{\ythree}{y^{(3)}}
+\newcommand{\xthree}{x^{(3)}}
+\newcommand{\tthree}{t^{(3)}}
+
+\theoremstyle{plain}
+\newtheorem{theo}{Theorem}
+\newtheorem{prop}[theo]{Proposition}
+\newtheorem{coro}[theo]{Corollary}
+% \newtheorem{claim}[theo]{Claim}
+\newtheorem{lem}[theo]{Lemma}
+\newtheorem{de}{Definition}
+
+% \usepackage{times}
+% \usepackage{makeidx}
+% \usepackage{amsfonts,dsfont}
+% \usepackage{listings}
+% \usepackage{textcomp}
+% \usepackage{lmodern} 
+% \usepackage{makeidx}
+% \usepackage{xcolor}
+% \usepackage{color}
+% \usepackage{tabularx}
+
+% % Pour les scripts Python
+% \usepackage{Style/python_extension}
+
+% % Pour les scripts JavaScript
+% \usepackage{Style/javascript_extension}
+
+% % Pour les scripts Bash
+% \usepackage{Style/bash_extension}
+
+% % Pour les fichiers XML
+% \usepackage{Style/xml_extension}
+
+% % Pour les fichiers HTML
+% \usepackage{Style/html5_extension}
+
+% % Pour les scripts json
+% \usepackage{Style/json_extension}
+
+% % Pour les url
+% \usepackage{url}
+% \usepackage{hyperref}
+% \usepackage{caption} % Pour les références en utilisant ces packages
+
+% % Pour les figures contenant plusieurs images
+% \usepackage[lofdepth,lotdepth]{subfig}
+
+% % Pour les notes de bas de page
+% \usepackage[bottom]{footmisc}
+
+
+% % Pour les headers et footers
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyfoot[L]{\textbf{Page \thepage}}
+% \fancyhead[L]{Ecole Nationale des Ponts et Chaussées | Stage Long | 2019-2020}
+% \renewcommand{\headrulewidth}{0.4pt}
+% \renewcommand{\headheight}{16pt}
+
+
+% % Pour les index
+% %\usepackage{imakeidx}
+% %\makeindex[name=auteur,title={Liste des auteurs}]
+% %\makeindex[name=mot,title={Index des mots clés}]
+% %\index[auteur]{einstein} pour mettre l'auteur 'einstein' en index du mot voulu
+
+% %\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% %\usepackage{minitoc}
