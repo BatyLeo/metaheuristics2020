@@ -1,0 +1,53 @@
+#ifndef LOADING_FLOW_H
+#define LOADING_FLOW_H
+
+#include "solution.h"
+
+#include <list>
+using namespace std;
+
+class Arc{
+private:
+    Node* origin_node;
+    Node* destination_node;
+    int free_space_lower_bound;
+    int free_space_upper_bound;
+
+    list<Arc*> superior_parallel_arcs;
+    list<Arc*> inferior_parallel_arcs;
+
+public:
+    Arc(Node* origin_node, Node* destination_node, int free_space_lower_bound, int free_space_upper_bound);
+
+};
+
+class Node{
+private:
+    int size;
+
+    int shortest_path_from_source;
+    int shortest_path_from_sink;
+
+    list<Arc*> entering_arcs;
+    list<Arc*> exiting_arcs;
+
+public:
+    Node(int size);
+
+};
+
+class LoadingFlow{
+private:
+
+    vector<Node*> box_nodes;
+    Node* source_node;
+    Node* sink_node;
+
+    vector<vector<Arc*> > arcs;
+
+public:
+    LoadingFlow(const Solution* solution, bool vertical = false);
+    ~LoadingFlow();
+};
+
+#endif // LOADING_FLOW_H
