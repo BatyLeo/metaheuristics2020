@@ -1,5 +1,5 @@
 .vscode
-.DS_STORE
+*.DS_STORE
 *.aux
 *.fdb_latexmk
 *.fls
@@ -7,3 +7,9 @@
 *.out
 *.synctex.gz
 *.dSYM
+*.pro
+*.autosave
+*CMakeLists.txt
+*CMakeLists.txt.user
+*.pri
+*build

@@ -1,11 +1,11 @@
-#include <QApplication>
+// #include <QApplication>
 #include <ctime>
 #include <cstdlib>
 
-#include <tools/parsing.h>
+#include "../src/tools/parsing.h"
 #include <random>
 #include <algorithm>
-#include <algorithms/heuristics.h>
+#include "../src/algorithms/heuristics.h"
 
 #include <iostream>
 
@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    string file_name = "/home/luca/Documents/MPRO/Projet_meta/captANOR150_7_4.dat";
+    string file_name = "/Users/taleboy/Desktop/metaheuristics2020/instances/instance1.txt";
     vector<pair<float, float> > target_coordinates = parseCoordinates(file_name);
 
     int communication_radius = 3;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         //    cout<<target_index<<": "<<solution->getTargetHasSensor(target_index)<<endl;
         //}
 
-        cout<<"admissibility: "<<solution->checkAdmissible()<<endl;
+        cout<<", admissibility: "<<solution->checkAdmissible()<<endl;
 
         if(solution->getScore()<min_score){
             min_score = solution->getScore();
