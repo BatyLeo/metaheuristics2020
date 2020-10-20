@@ -1,25 +1,29 @@
-struct Position
-    row::Int64
-    column::Int64
-end
+using JuMP
 
-struct Target
-    index::Int64
-    position::Position
-end
+include("SensorNetwork.jl")
+using .SensorNetwork
 
-struct Sensor
-    target_index::Int64
-end
+# global parameters
+const communication_radius = 2
+const reception_radius = 1
+const reception_level = 1
+const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/instance1.txt"
 
-struct Grid
-    width::Int64
-    height::Int64
-    targets::Array{Target, 1}
-    sensors::Array{Sensor, 1}
-    sink::Position
-end
+# parsing the instance
+target_coordinates = parse_instance(instance_path)
 
-function distance(position1::Position, position2::Position)
-    return
-end
+# create a dataset from the instance
+dataset = Dataset(communication_radius, reception_radius, reception_level, target_coordinates)
+
+# visualize it
+visualize_instance(dataset, "instance.png")
+
+# build and solve the MIP
+model, variables = build_MIP(dataset)
+solution = solve_MIP!(model, variables, dataset)
+
+# check admissibility
+println("Is the solution admissible ? $(check_admissible(solution))")
+
+# visualize the solutions
+visualize_solution(solution, "solution.png")
