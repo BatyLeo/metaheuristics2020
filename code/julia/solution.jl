@@ -18,6 +18,10 @@ function check_admissible(solution::Solution)
     for target_index in 1:number_targets
         # iterate over all communication neighbors to count all convering sensors
         nb_covering_sensors = 0
+        if solution.target_has_sensor[target_index]
+            nb_covering_sensors += 1
+        end
+
         for communication_neighbor_index in solution.dataset.communication_neighbors[target_index]
             if solution.target_has_sensor[communication_neighbor_index]
                 nb_covering_sensors += 1
