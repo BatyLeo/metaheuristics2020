@@ -7,7 +7,7 @@ using .SensorNetwork
 const communication_radius = 2
 const reception_radius = 1
 const reception_level = 1
-const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/captANOR225_8_10.txt"
+const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/mini_instance.txt"
 
 # parsing the instance
 target_coordinates = parse_instance(instance_path)
@@ -27,3 +27,9 @@ println("Is the solution admissible ? $(check_admissible(solution))")
 
 # visualize the solutions
 visualize_solution(solution, "solution.png")
+
+write_solution("test.txt", solution)
+
+parsed_solution = parse_solution("test.txt", dataset)
+
+println(parsed_solution)

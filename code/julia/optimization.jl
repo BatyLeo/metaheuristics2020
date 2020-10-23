@@ -1,8 +1,11 @@
 using JuMP, Gurobi
 
-function build_MIP(dataset::Dataset)
+function build_MIP(dataset::Dataset; log_file_path="log.txt")
     model = Model(Gurobi.Optimizer)
-    set_optimizer_attribute(model, "LogFile", "log.txt")
+
+    set_optimizer_attribute(model, "LogFile", log_file_path)
+    # remove log file if already exists
+    rm(log_file_path, force=true)
 
     number_targets = dataset.number_targets
     E_com_length = length(dataset.communication_edges)
