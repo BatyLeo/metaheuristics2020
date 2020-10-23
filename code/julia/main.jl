@@ -7,7 +7,7 @@ using .SensorNetwork
 const communication_radius = 2
 const reception_radius = 1
 const reception_level = 1
-const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/captANOR1500_18_100.txt"
+const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/captANOR225_8_10.txt"
 
 # parsing the instance
 target_coordinates = parse_instance(instance_path)

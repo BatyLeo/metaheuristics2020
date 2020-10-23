@@ -32,6 +32,6 @@ end
 function visualize_solution(solution::Solution, save_path::String)
     figure = instance_figure(solution.dataset)
     sensors_coordinates = [elem for (index, elem) in enumerate(solution.dataset.target_coordinates) if solution.target_has_sensor[index]]
-    add_point_cloud!(figure, sensors_coordinates, label="sensors", color=:red)
+    add_point_cloud!(figure, sensors_coordinates, label="sensors", color=:green)
     savefig(figure, save_path)
 end
