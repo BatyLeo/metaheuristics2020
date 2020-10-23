@@ -92,7 +92,7 @@ Solution* simpleHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
     }
     vector<int> recepting_sensor_count(number_targets, 0);
 
-    auto compare = [&seed_vector](int target_index_1, int target_index_2) { return seed_vector[target_index_1] > seed_vector[target_index_2]; };
+    auto compare = [&seed_vector](int target_index_1, int target_index_2) { return seed_vector[target_index_1] < seed_vector[target_index_2]; };
     std::priority_queue<int, std::vector<int>, decltype(compare)> adjacent_targets_without_sensors(compare);
 
     vector<bool> target_is_in_queue(number_targets, false);

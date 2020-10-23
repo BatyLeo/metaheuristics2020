@@ -1,40 +1,8 @@
 #include "metaheuristics.h"
+#include "basic_algorithms.h"
 
 
 Solution* seedVectorMetaheuristic(int number_iterations, const vector<int> &initial_seed, DataSet* data_set){
-    int number_targets = data_set->getNumberTargets();
-
-    vector<int> seed = vector<int>(initial_seed);
-
-    Solution* solution = shortestPathsHeuristic(data_set, seed);
-
-    for(int iteration = 0; iteration<number_iterations; iteration++){
-        int random_target_index_1 = rand()%number_targets;
-        int random_target_index_2 = rand()%number_targets;
-
-        int memory = seed[random_target_index_1];
-        seed[random_target_index_1] = seed[random_target_index_2];
-        seed[random_target_index_2] = memory;
-
-        Solution* test_solution = shortestPathsHeuristic(data_set, seed);
-
-        if(test_solution->getScore()<=solution->getScore()){
-            delete solution;
-            solution = test_solution;
-        } else{
-            memory = seed[random_target_index_1];
-            seed[random_target_index_1] = seed[random_target_index_2];
-            seed[random_target_index_2] = memory;
-            delete test_solution;
-        }
-
-    }
-
-    return solution;
-
-}
-
-Solution* seedVectorSimulatedAnnealingMetaheuristic(int number_iterations, const vector<int> &initial_seed, DataSet* data_set){
     int number_targets = data_set->getNumberTargets();
 
     vector<int> seed = vector<int>(initial_seed);
@@ -256,6 +224,52 @@ Solution* receptionOrientedMetaheuristic(int number_iterations, const Solution* 
             }
 
         }
+    }
+
+    return best_solution;
+}
+
+Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution* solution, float T_0, float phi, float T_min){
+    float T = T_0;
+
+    vector<int> order_vector = solutionToOrderVector(solution);
+
+    const DataSet* data_set = solution->getDataSet();
+    int number_targets = data_set->getNumberTargets();
+
+    // Solution* my_solution;
+
+    Solution* best_solution = simpleHeuristic(data_set, order_vector);
+
+    while (T >= T_min) {
+        for(int iteration=0; iteration<number_iterations; iteration++){
+            int random_target_index_1 = rand() % number_targets;
+            int random_target_index_2 = rand() % number_targets;
+
+            // switch
+            int memory = order_vector[random_target_index_1];
+            order_vector[random_target_index_1] = order_vector[random_target_index_2];
+            order_vector[random_target_index_2] = memory;
+
+            Solution* test_solution = simpleHeuristic(data_set, order_vector);
+
+            int score_difference = test_solution->getScore() - best_solution->getScore();
+            float keep_probability = exp(-score_difference / T);
+
+            float random_value = rand() / (float)RAND_MAX;
+            if (random_value <= keep_probability){
+                delete best_solution;
+                best_solution = test_solution;
+            } else {
+                // switch back
+                memory = order_vector[random_target_index_1];
+                order_vector[random_target_index_1] = order_vector[random_target_index_2];
+                order_vector[random_target_index_2] = memory;
+                delete test_solution;
+            }
+
+        }
+        T *= phi;
     }
 
     return best_solution;

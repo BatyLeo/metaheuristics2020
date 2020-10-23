@@ -4,10 +4,10 @@ include("SensorNetwork.jl")
 using .SensorNetwork
 
 # global parameters
-const communication_radius = 2
+const communication_radius = 1
 const reception_radius = 1
-const reception_level = 1
-const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/mini_instance.txt"
+const reception_level = 2
+const instance_path = "/Users/taleboy/Desktop/metaheuristics2020/instances/captANOR150_7_4.txt"
 
 # parsing the instance
 target_coordinates = parse_instance(instance_path)
