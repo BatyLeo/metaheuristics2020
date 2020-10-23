@@ -13,3 +13,4 @@
 *CMakeLists.txt.user
 *.pri
 *build
+code/c++/sensor_network/main.cpp

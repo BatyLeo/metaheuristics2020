@@ -2,10 +2,11 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "../src/tools/parsing.h"
-#include <random>
-#include <algorithm>
-#include "../src/algorithms/heuristics.h"
+//#include <tools/parsing.h>
+//#include <random>
+//#include <algorithm>
+//#include <algorithms/heuristics.h>
+#include <interface/mainwindow.h>
 
 #include <iostream>
 
@@ -14,7 +15,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    string file_name = "/Users/taleboy/Desktop/metaheuristics2020/instances/instance1.txt";
+    /*string file_name = "/home/luca/Documents/MPRO/Projet_meta/captANOR150_7_4.dat";
     vector<pair<float, float> > target_coordinates = parseCoordinates(file_name);
 
     int communication_radius = 3;
@@ -55,14 +56,14 @@ int main(int argc, char *argv[])
 
     cout<<"best score: "<<min_score<<endl;
 
-    //std::srand ( unsigned ( std::time(0) ) );
+    //std::srand ( unsigned ( std::time(0) ) );*/
 
-    //QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-    //MainWindow main_window;
-    //main_window.showMaximized();
+    MainWindow main_window;
+    main_window.showMaximized();
 
-    //return app.exec();
+    return app.exec();
 
     return 0;
 
