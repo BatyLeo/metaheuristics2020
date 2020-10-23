@@ -18,10 +18,14 @@ MainWindow::MainWindow(){
     central_widget = new CentralWidget(solution_model, this);
     setCentralWidget(central_widget);
 
+    current_data_set_folder_path = QString();
+
 
     // building menu bar
     QMenu *file_menu = menuBar()->addMenu("File");
     file_menu->addAction("Load data set", this, SLOT(loadDataSet()));
+    file_menu->addAction("Load saved data set", this, SLOT(loadSavedDataSet()));
+    file_menu->addAction("Save data set as", this, SLOT(saveDataSetAs()));
     QMenu *view_menu = menuBar()->addMenu("View");
     view_menu->addAction(sidebar->toggleViewAction());
 
@@ -43,7 +47,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
 
 void MainWindow::loadDataSet(){
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    QString file_name = QFileDialog::getOpenFileName(nullptr, "Select a file to open.", QString());//, "Text files (*.txt);;XML files (*.xml);;");
+    QString file_name = QFileDialog::getOpenFileName(this, "Select a file to open.", QString());//, "Text files (*.txt);;XML files (*.xml);;");
     // !!! catch errors durind loading
     if(file_name.length()!=0){
         DataSet* new_data_set = new DataSet(2, 2, 2, parseCoordinates(file_name.toStdString()));
@@ -74,6 +78,60 @@ void MainWindow::loadDataSet(){
         setDataSet(new_data_set);
     }
     QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::loadSavedDataSet(){
+    QString folder_name = QFileDialog::getExistingDirectory(this, "Choose a project folder");
+
+    QString data_set_file_name = folder_name+QString("/data_set");
+    if(!QFile::exists(data_set_file_name)){
+        QMessageBox::warning(this, "File not found", "The file containing the data set could not be found", QMessageBox::Ok, QMessageBox::Ok);
+    } else{
+        vector<pair<float, float> > coordinates = parseCoordinates(data_set_file_name.toStdString());
+        DataSet *saved_data_set = new DataSet(2, 2, 2, coordinates);
+
+        QString solutions_folder_name = folder_name+QString("/solutions");
+
+        int solution_index = 0;
+        bool solution_exists = true;
+        while(solution_exists){
+            QString solution_file_name = solutions_folder_name+QString("/solution_%1").arg(solution_index);
+            solution_exists = QFile::exists(solution_file_name);
+            if(solution_exists){
+                vector<bool> sensor_placement = parseSensorPlacement(solution_file_name.toStdString(), saved_data_set->getNumberTargets());
+                Solution *solution = new Solution(saved_data_set, sensor_placement);
+                saved_data_set->addSolution(solution);
+            }
+            solution_index++;
+        }
+        current_data_set_folder_path = folder_name;
+        setDataSet(saved_data_set);
+    }
+}
+
+void MainWindow::saveDataSetAs(){
+    if(!data_set){
+        return;
+    }
+
+    QString folder_name = QFileDialog::getSaveFileName(this, "Save file as");
+
+    if(folder_name.length()==0){
+        QMessageBox::warning(this, "Empty file name", "The data set could not be saved with an empty file name", QMessageBox::Ok, QMessageBox::Ok);
+        return;
+    }
+
+    QDir().mkdir(folder_name);
+    writeDataSetToFile(folder_name.toStdString(), "data_set", data_set);
+
+    QString solutions_folder_name = folder_name+QString("/solutions");
+    QDir().mkdir(solutions_folder_name);
+
+    int number_solutions = data_set->getNumberSolutions();
+    for(int solution_index = 0; solution_index<number_solutions; solution_index++){
+        Solution *solution = data_set->getSolution(solution_index);
+        writeSolutionToFile(solutions_folder_name.toStdString(), "solution_"+to_string(solution_index), solution);
+    }
 }
 
 void MainWindow::setDataSet(DataSet *new_data_set){

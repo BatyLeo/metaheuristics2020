@@ -11,6 +11,24 @@ data_set(data_set)
     target_has_sensor = vector<bool>(data_set->getNumberTargets(), false);
 }
 
+Solution::Solution(const DataSet* data_set, const vector<bool> &sensor_placement) :
+data_set(data_set)
+{
+    score = 0;
+
+    int number_targets = data_set->getNumberTargets();
+    if(sensor_placement.size() != number_targets){
+        throw "number of targets incompatible with data set";
+    }
+
+    target_has_sensor = vector<bool>(number_targets);
+    for(int target_index = 0; target_index<number_targets; target_index++){
+        if(sensor_placement[target_index]){
+            setTargetHasSensor(target_index, true);
+        }
+    }
+}
+
 Solution::~Solution(){
 
 }

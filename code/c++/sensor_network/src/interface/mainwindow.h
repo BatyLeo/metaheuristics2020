@@ -15,6 +15,7 @@
 #include <tools/parsing.h>
 #include <algorithms/heuristics.h>
 #include <algorithms/metaheuristics.h>
+#include <tools/writing.h>
 
 class MainWindow : public QMainWindow
 {
@@ -33,6 +34,8 @@ private:
     ParametersModel* parameters_model;
     SolutionModel* solution_model;
 
+    QString current_data_set_folder_path;
+
     void setDataSet(DataSet *new_data_set);
     void handleSelectedSolutionChanged(int solution_index);
 
@@ -42,6 +45,8 @@ public:
 
 private slots:
     void loadDataSet();
+    void loadSavedDataSet();
+    void saveDataSetAs();
 };
 
 #endif // MAINWINDOW_H

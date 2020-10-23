@@ -44,3 +44,25 @@ vector<pair<float, float> > parseCoordinates(string file_name)
     return target_coordinates;
 }
 
+vector<bool> parseSensorPlacement(string file_name, int number_targets){
+    string file_string = fileNameToString(file_name);
+    stringstream file_stream(file_string);
+    string line = "";
+    stringstream line_stream;
+
+    vector<bool> sensor_placement(number_targets);
+
+    while(getline(file_stream, line)){
+        int target_index;
+        bool target_has_sensor;
+
+        line_stream = stringstream(line);
+        line_stream >> target_index;
+        line_stream >> target_has_sensor;
+
+        sensor_placement[target_index - 1] = target_has_sensor;
+    }
+
+    return sensor_placement;
+}
+

@@ -14,4 +14,6 @@ string fileNameToString(string file_name);
 
 vector<pair<float, float> > parseCoordinates(string file_name);
 
+vector<bool> parseSensorPlacement(string file_name, int number_targets);
+
 #endif // PARSING_H
