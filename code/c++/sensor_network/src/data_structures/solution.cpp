@@ -23,6 +23,10 @@ int Solution::getScore() const{
     return score;
 }
 
+const DataSet* Solution::getDataSet() const{
+    return data_set;
+}
+
 void Solution::setTargetHasSensor(int target_index, bool value){
     bool previous_value = target_has_sensor[target_index];
     target_has_sensor[target_index] = value;

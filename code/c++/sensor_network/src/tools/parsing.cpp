@@ -26,13 +26,13 @@ vector<pair<float, float> > parseCoordinates(string file_name)
     stringstream line_stream;
 
     vector<pair<float, float> > target_coordinates;
+    getline(file_stream, line);
 
-    while(file_stream){
+    while(getline(file_stream, line)){
         int target_index;
         float x_coordinate;
         float y_coordinate;
 
-        getline(file_stream, line);
         line_stream = stringstream(line);
         line_stream >> target_index;
         line_stream >> x_coordinate;

@@ -8,7 +8,12 @@ using namespace std;
 
 Solution* shortestPathsHeuristic(const DataSet* data_set, const vector<int> &seed_vector);
 
+Solution* simpleHeuristic(const DataSet* data_set, const vector<int> &seed_vector);
 
+Solution* hybridHeuristic(const DataSet* data_set, const vector<int>& seed_vector);
+
+
+void repareConnection(Solution* solution);
 
 #endif // HEURISTICS_H
 
