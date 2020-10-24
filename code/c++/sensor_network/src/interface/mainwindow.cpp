@@ -30,6 +30,8 @@ MainWindow::MainWindow(){
     view_menu->addAction(sidebar->toggleViewAction());
 
     connect(sidebar, &Sidebar::selectedSolutionChanged, this, &MainWindow::handleSelectedSolutionChanged);
+    connect(sidebar, &Sidebar::computeHeuristicSolution, this, &MainWindow::computeHeuristicSolution);
+    connect(sidebar, &Sidebar::launchMetaheuristic, this, &MainWindow::launchMetaheuristic);
 }
 
 MainWindow::~MainWindow(){
@@ -46,13 +48,13 @@ void MainWindow::closeEvent(QCloseEvent *event){
 }
 
 void MainWindow::loadDataSet(){
-    QApplication::setOverrideCursor(Qt::WaitCursor);
     QString file_name = QFileDialog::getOpenFileName(this, "Select a file to open.", QString());//, "Text files (*.txt);;XML files (*.xml);;");
+    QApplication::setOverrideCursor(Qt::WaitCursor);
     // !!! catch errors durind loading
     if(file_name.length()!=0){
         DataSet* new_data_set = new DataSet(2, 1, 1, parseCoordinates(file_name.toStdString()));
 
-        int number_targets = new_data_set->getNumberTargets();
+        /*int number_targets = new_data_set->getNumberTargets();
         int reception_level = new_data_set->getReceptionLevel();
 
         vector<int> seed_vector = vector<int>(reception_level*number_targets, 0);
@@ -76,7 +78,7 @@ void MainWindow::loadDataSet(){
             if(!metaheuristic_solution->checkAdmissible()){
                 cout<<"dommage..."<<endl;
             }
-        }
+        }*/
 
         setDataSet(new_data_set);
     }
@@ -153,6 +155,47 @@ void MainWindow::setDataSet(DataSet *new_data_set){
     solution_model->setSolution(new_data_set->getSolution(0));
 }
 
+void MainWindow::addSolution(Solution* solution){
+    solutions_table_model->addSolution(solution);
+}
+
 void MainWindow::handleSelectedSolutionChanged(int solution_index){
     solution_model->setSolution(data_set->getSolution(solution_index));
+}
+
+void MainWindow::computeHeuristicSolution(){
+
+     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    int number_targets = data_set->getNumberTargets();
+    int reception_level = data_set->getReceptionLevel();
+
+    vector<int> seed_vector = vector<int>(reception_level*number_targets, 0);
+    for(int target_index = 0; target_index<number_targets; target_index++){
+        for(int reception = 0; reception<reception_level; reception++){
+            seed_vector[target_index*reception_level+reception] = target_index;
+        }
+    }
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    shuffle(seed_vector.begin(), seed_vector.end(), std::default_random_engine(seed));
+    Solution* heuristic_solution = shortestPathsHeuristic(data_set, seed_vector);
+
+    addSolution(heuristic_solution);
+
+    QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::launchMetaheuristic(){
+
+     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    const Solution* initial_solution = solution_model->getSolution();
+
+    Solution* metaheuristic_solution = simulatedAnnealingMetaheuristic(2000, initial_solution, 10000, 0.9, 0.01);
+
+    addSolution(metaheuristic_solution);
+
+    QApplication::restoreOverrideCursor();
+
 }

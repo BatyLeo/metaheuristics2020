@@ -57,6 +57,8 @@ public:
 
     void setDataSet(DataSet* new_data_set);
 
+    void addSolution(Solution* solution);
+
 private:
     DataSet *data_set;
 };

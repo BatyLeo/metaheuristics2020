@@ -37,7 +37,11 @@ private:
     QString current_data_set_folder_path;
 
     void setDataSet(DataSet *new_data_set);
+    void addSolution(Solution* solution);
     void handleSelectedSolutionChanged(int solution_index);
+
+    void computeHeuristicSolution();
+    void launchMetaheuristic();
 
 public:
     MainWindow();

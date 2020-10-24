@@ -4,6 +4,7 @@
 #include <QDockWidget>
 #include <QTableView>
 #include <QGridLayout>
+#include <QPushButton>
 
 #include "data_models.h"
 
@@ -28,6 +29,8 @@ public:
 
 signals:
     void selectedSolutionChanged(int solution_index);
+    void computeHeuristicSolution();
+    void launchMetaheuristic();
 };
 
 #endif // SIDEBAR_H

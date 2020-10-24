@@ -17,14 +17,21 @@ targets_table_model(targets_table_model), parameters_model(parameters_model), so
     solutions_table_view->setSelectionBehavior(QAbstractItemView::SelectRows);
     solutions_table_view->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    layout->addWidget(targets_table_view, 0, 0, 1, 1);
+    QPushButton* compute_heuristic_solution_push_button = new QPushButton(QString("Compute heuristic solution"), this);
+    QPushButton* launch_metaheuristic_push_button = new QPushButton(QString("Launch metaheuristic"), this);
+
+    layout->addWidget(targets_table_view, 0, 0, 3, 1);
     layout->addWidget(parameters_view, 0, 1, 1, 1);
-    layout->addWidget(solutions_table_view, 1, 0, 2, 2);
+    layout->addWidget(compute_heuristic_solution_push_button, 1, 1, 1, 1);
+    layout->addWidget(launch_metaheuristic_push_button, 2, 1, 1, 1);
+    layout->addWidget(solutions_table_view, 3, 0, 2, 2);
 
     container->setLayout(layout);
 
     setWidget(container);
 
+    connect(compute_heuristic_solution_push_button, &QPushButton::released, this, &Sidebar::computeHeuristicSolution);
+    connect(launch_metaheuristic_push_button, &QPushButton::released, this, &Sidebar::launchMetaheuristic);
     connect(solutions_table_view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &Sidebar::handleSelectedSolutionChanged);
 }
 

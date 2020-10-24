@@ -246,6 +246,12 @@ void SolutionsTableModel::setDataSet(DataSet *new_data_set){
     endResetModel();
 }
 
+void SolutionsTableModel::addSolution(Solution* solution){
+    beginInsertRows(QModelIndex(), data_set->getNumberSolutions(), data_set->getNumberSolutions());
+    data_set->addSolution(solution);
+    endInsertRows();
+}
+
 SolutionModel::SolutionModel(Solution *solution, QObject *parent) : QAbstractTableModel(parent),
     solution(solution)
 {
