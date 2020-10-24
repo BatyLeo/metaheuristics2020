@@ -50,7 +50,7 @@ void MainWindow::loadDataSet(){
     QString file_name = QFileDialog::getOpenFileName(this, "Select a file to open.", QString());//, "Text files (*.txt);;XML files (*.xml);;");
     // !!! catch errors durind loading
     if(file_name.length()!=0){
-        DataSet* new_data_set = new DataSet(2, 2, 2, parseCoordinates(file_name.toStdString()));
+        DataSet* new_data_set = new DataSet(2, 1, 1, parseCoordinates(file_name.toStdString()));
 
         int number_targets = new_data_set->getNumberTargets();
         int reception_level = new_data_set->getReceptionLevel();
@@ -68,11 +68,14 @@ void MainWindow::loadDataSet(){
 
         for(int i = 0; i<1; i++){
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-            shuffle(seed_vector.begin(), seed_vector.end(), std::default_random_engine(seed));
+            shuffle(seed_vector.begin(), seed_vector.end(), std::default_random_engine(0));
             Solution* heuristic_solution = shortestPathsHeuristic(new_data_set, seed_vector);
-            Solution* metaheuristic_solution = seedVectorMetaheuristic(10000, seed_vector, new_data_set);//receptionOrientedMetaheuristic(1000, heuristic_solution);
+            Solution* metaheuristic_solution = simulatedAnnealingMetaheuristic(2000, heuristic_solution, 10000, 0.9, 0.01);//seedVectorMetaheuristic(10000, seed_vector, new_data_set);//receptionOrientedMetaheuristic(1000, heuristic_solution);
             new_data_set->addSolution(heuristic_solution);
             new_data_set->addSolution(metaheuristic_solution);
+            if(!metaheuristic_solution->checkAdmissible()){
+                cout<<"dommage..."<<endl;
+            }
         }
 
         setDataSet(new_data_set);
@@ -88,7 +91,7 @@ void MainWindow::loadSavedDataSet(){
         QMessageBox::warning(this, "File not found", "The file containing the data set could not be found", QMessageBox::Ok, QMessageBox::Ok);
     } else{
         vector<pair<float, float> > coordinates = parseCoordinates(data_set_file_name.toStdString());
-        DataSet *saved_data_set = new DataSet(2, 2, 2, coordinates);
+        DataSet *saved_data_set = new DataSet(2, 1, 1, coordinates);
 
         QString solutions_folder_name = folder_name+QString("/solutions");
 

@@ -274,3 +274,4 @@ Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution*
 
     return best_solution;
 }
+

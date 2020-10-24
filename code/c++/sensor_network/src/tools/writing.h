@@ -1,8 +1,8 @@
 #ifndef WRITING_H
 #define WRITING_H
 
-#include <data_structures/data_set.h>
-#include <data_structures/solution.h>
+#include "../data_structures/data_set.h"
+#include "../data_structures/solution.h"
 
 #include <iostream>
 #include <fstream>

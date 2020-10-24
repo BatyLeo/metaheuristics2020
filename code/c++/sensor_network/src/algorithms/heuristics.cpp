@@ -91,8 +91,13 @@ Solution* simpleHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
         return solution;
     }
     vector<int> recepting_sensor_count(number_targets, 0);
+    vector<bool> no_reception_potential(number_targets, false);
 
-    auto compare = [&seed_vector](int target_index_1, int target_index_2) { return seed_vector[target_index_1] < seed_vector[target_index_2]; };
+    auto compare = [&seed_vector, &no_reception_potential](int target_index_1, int target_index_2) {
+        if(no_reception_potential[target_index_1] == no_reception_potential[target_index_2]){
+            return seed_vector[target_index_1] < seed_vector[target_index_2];
+        }
+        return no_reception_potential[target_index_1] > no_reception_potential[target_index_2]; };
     std::priority_queue<int, std::vector<int>, decltype(compare)> adjacent_targets_without_sensors(compare);
 
     vector<bool> target_is_in_queue(number_targets, false);
@@ -111,6 +116,25 @@ Solution* simpleHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
 
         int target_index = adjacent_targets_without_sensors.top();
         adjacent_targets_without_sensors.pop();
+
+        // checking the reception potential of the target
+        // if all the reception neighbors of the target already have enough reception, it has no reception potential
+        no_reception_potential[target_index] = true;
+        for(list<int>::const_iterator reception_neighbor_iterator = data_set->getReceptionNeighbors(target_index).begin(); reception_neighbor_iterator != data_set->getReceptionNeighbors(target_index).end(); reception_neighbor_iterator++){
+            int reception_neighbor_index = *reception_neighbor_iterator;
+            if(recepting_sensor_count[reception_neighbor_index]<reception_level){
+                no_reception_potential[target_index] = false;
+                break;
+            }
+        }
+
+        // if the target has no reception potential, it is pushed back into the priority queue
+        // the fact that the target has no reception potential is taken into account by the comparison
+        // and the target should only reach the top of the queue when only such targets are left
+        if(no_reception_potential[target_index]){
+            adjacent_targets_without_sensors.push(target_index);
+            continue;
+        }
 
         solution->setTargetHasSensor(target_index, true);
 
