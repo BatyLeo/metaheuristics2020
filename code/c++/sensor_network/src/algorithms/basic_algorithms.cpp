@@ -16,3 +16,22 @@ vector<int> solutionToOrderVector(const Solution* solution) {
     }
     return order_vector;
 }
+
+void twoOptSwitch(vector<int> &order_vector, int target_index_1, int target_index_2) {
+    int memory = order_vector[target_index_1];
+    order_vector[target_index_1] = order_vector[target_index_2];
+    order_vector[target_index_2] = memory;
+    return;
+}
+
+pair<int, int> randomTwoOptSwitch(vector<int> &order_vector) {
+    int number_targets = order_vector.size();
+
+    int random_target_index_1 = rand() % number_targets;
+    int random_target_index_2 = rand() % number_targets;
+
+    //switch
+    twoOptSwitch(order_vector, random_target_index_1, random_target_index_2);
+
+    return pair<int, int>(random_target_index_1, random_target_index_2);
+}

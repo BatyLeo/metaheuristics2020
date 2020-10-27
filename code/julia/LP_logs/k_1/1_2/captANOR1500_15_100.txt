@@ -1,0 +1,66 @@
+
+Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:25:00 2020
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
+Optimize a model with 227199 rows, 169648 columns and 764416 nonzeros
+Model fingerprint: 0x3f579511
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+
+Concurrent LP optimizer: dual simplex and barrier
+Showing barrier log only...
+
+Presolve removed 83 rows and 1 columns
+Presolve time: 2.75s
+Presolved: 227116 rows, 169647 columns, 763113 nonzeros
+
+Elapsed ordering time = 5s
+Elapsed ordering time = 11s
+Elapsed ordering time = 15s
+Elapsed ordering time = 20s
+Elapsed ordering time = 25s
+Elapsed ordering time = 31s
+Elapsed ordering time = 35s
+Elapsed ordering time = 40s
+Elapsed ordering time = 45s
+Elapsed ordering time = 50s
+Elapsed ordering time = 51s
+Elapsed ordering time = 55s
+Elapsed ordering time = 60s
+Elapsed ordering time = 65s
+Elapsed ordering time = 70s
+Elapsed ordering time = 75s
+Elapsed ordering time = 76s
+Elapsed ordering time = 80s
+Elapsed ordering time = 85s
+Elapsed ordering time = 90s
+Elapsed ordering time = 95s
+Elapsed ordering time = 100s
+Elapsed ordering time = 104s
+Elapsed ordering time = 105s
+Elapsed ordering time = 110s
+Elapsed ordering time = 115s
+Elapsed ordering time = 120s
+Ordering time: 124.94s
+
+Barrier statistics:
+ AA' NZ     : 7.770e+06
+ Factor NZ  : 1.547e+08 (roughly 1.4 GBytes of memory)
+ Factor Ops : 4.404e+11 (roughly 30 seconds per iteration)
+ Threads    : 1
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   5.94319725e+05 -1.09256258e+06  5.86e+05 4.16e-02  1.23e+02   208s
+   1   3.26600890e+05 -2.27284875e+06  2.05e+05 8.34e-02  4.82e+01   288s
+
+Barrier performed 1 iterations in 342.94 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+
+Solved with dual simplex
+Solved in 40574 iterations and 343.51 seconds
+Optimal objective  7.905664943e+01

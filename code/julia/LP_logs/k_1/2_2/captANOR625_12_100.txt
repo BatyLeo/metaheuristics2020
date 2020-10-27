@@ -1,0 +1,51 @@
+
+Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:02:50 2020
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
+Optimize a model with 58381 rows, 43472 columns and 216705 nonzeros
+Model fingerprint: 0xa4d541ec
+Coefficient statistics:
+  Matrix range     [1e+00, 6e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+
+Concurrent LP optimizer: dual simplex and barrier
+Showing barrier log only...
+
+Presolve removed 35 rows and 1 columns
+Presolve time: 0.49s
+Presolved: 58346 rows, 43471 columns, 215906 nonzeros
+
+Elapsed ordering time = 6s
+Elapsed ordering time = 10s
+Ordering time: 14.98s
+
+Barrier statistics:
+ Dense cols : 44
+ AA' NZ     : 2.144e+06
+ Factor NZ  : 1.362e+07 (roughly 150 MBytes of memory)
+ Factor Ops : 1.248e+10 (roughly 4 seconds per iteration)
+ Threads    : 1
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   3.26552379e+04 -9.87771161e+04  3.21e+04 2.09e-02  1.21e+01    21s
+   1   2.27726885e+04 -9.37189050e+04  1.72e+04 1.47e-01  7.54e+00    24s
+   2   1.72324444e+04 -8.14124013e+04  9.35e+03 6.28e-03  2.05e+00    26s
+   3   2.21451108e+03 -1.51214219e+04  8.87e+02 1.11e-04  2.45e-01    29s
+   4   5.65633489e+02 -3.86188604e+03  2.36e+00 7.63e-13  3.84e-02    31s
+   5   4.27823935e+02 -3.99691417e+02  6.39e-12 1.19e-13  7.14e-03    33s
+   6   1.29811480e+02 -1.24685359e+02  8.34e-12 2.26e-14  2.19e-03    37s
+   7   3.50827279e+01 -1.48288993e+00  7.07e-12 2.44e-15  3.15e-04    41s
+   8   2.05460948e+01  4.99957382e+00  7.83e-12 9.99e-16  1.34e-04    45s
+   9   1.75101740e+01  1.06432084e+01  3.28e-12 2.11e-15  5.91e-05    49s
+  10   1.61945120e+01  1.35587411e+01  3.26e-11 6.66e-16  2.27e-05    52s
+
+Barrier performed 10 iterations in 54.03 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+
+Solved with dual simplex
+Solved in 17024 iterations and 54.10 seconds
+Optimal objective  1.523418854e+01

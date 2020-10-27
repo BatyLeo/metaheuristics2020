@@ -1,0 +1,67 @@
+
+Gurobi 9.0.3 (mac64) logging started Mon Oct 26 20:58:17 2020
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
+Optimize a model with 227199 rows, 169648 columns and 846688 nonzeros
+Model fingerprint: 0x2d0d029a
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+
+Concurrent LP optimizer: dual simplex and barrier
+Showing barrier log only...
+
+Presolve removed 50 rows and 1 columns
+Presolve time: 2.61s
+Presolved: 227149 rows, 169647 columns, 845020 nonzeros
+
+Elapsed ordering time = 5s
+Elapsed ordering time = 10s
+Elapsed ordering time = 15s
+Elapsed ordering time = 20s
+Elapsed ordering time = 25s
+Elapsed ordering time = 30s
+Elapsed ordering time = 35s
+Elapsed ordering time = 39s
+Elapsed ordering time = 40s
+Elapsed ordering time = 45s
+Elapsed ordering time = 50s
+Elapsed ordering time = 55s
+Elapsed ordering time = 61s
+Elapsed ordering time = 65s
+Elapsed ordering time = 70s
+Elapsed ordering time = 75s
+Elapsed ordering time = 80s
+Elapsed ordering time = 85s
+Elapsed ordering time = 88s
+Elapsed ordering time = 91s
+Elapsed ordering time = 95s
+Elapsed ordering time = 100s
+Elapsed ordering time = 105s
+Elapsed ordering time = 110s
+Ordering time: 114.74s
+
+Barrier statistics:
+ Dense cols : 45
+ AA' NZ     : 1.375e+07
+ Factor NZ  : 1.483e+08 (roughly 1.4 GBytes of memory)
+ Factor Ops : 4.209e+11 (roughly 24 seconds per iteration)
+ Threads    : 1
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   1.93591093e+05 -6.27440761e+05  1.92e+05 1.00e-02  2.39e+01   172s
+   1   1.63750686e+05 -6.21310037e+05  1.34e+05 1.35e-01  1.85e+01   251s
+   2   1.12232801e+05 -8.90556594e+05  6.61e+04 8.94e-04  5.71e+00   320s
+   3   8.09501349e+04 -3.17930306e+05  4.22e+04 1.57e-12  2.40e+00   377s
+   4   5.67864937e+03 -3.84874144e+04  2.31e+03 2.79e-12  1.89e-01   444s
+
+Barrier performed 4 iterations in 451.29 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+
+Solved with dual simplex
+Solved in 56959 iterations and 451.64 seconds
+Optimal objective  4.432760613e+01

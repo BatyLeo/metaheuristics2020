@@ -1,0 +1,21 @@
+
+Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:01:14 2020
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
+Optimize a model with 4801 rows, 3487 columns and 17202 nonzeros
+Model fingerprint: 0xac559697
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+Presolve removed 20 rows and 1 columns
+Presolve time: 0.01s
+Presolved: 4781 rows, 3486 columns, 17026 nonzeros
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   2.090000e+02   0.000000e+00      0s
+    3671    2.4511053e+01   0.000000e+00   0.000000e+00      1s
+
+Solved in 3671 iterations and 0.58 seconds
+Optimal objective  2.451105251e+01

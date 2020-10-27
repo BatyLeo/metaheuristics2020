@@ -1,0 +1,1 @@
+- `global_main.jl`: computes inferior bound for every instance and parameters combination with a linear relaxation of the MIP

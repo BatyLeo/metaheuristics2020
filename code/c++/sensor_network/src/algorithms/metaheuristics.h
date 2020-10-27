@@ -15,6 +15,11 @@ Solution* priorityOrderMetaheuristic(int number_iterations, vector<int> &priorit
 
 Solution* receptionOrientedMetaheuristic(int number_iterations, const Solution* initial_solution);
 
-Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution* solution, float T_0, float phi, float T_min);
+Solution* localSearchMetaheuristic(int number_iterations, const Solution* initial_solution);
+
+Solution* _simulatedAnnealingMetaheuristic(int number_iterations, const Solution* initial_solution, float T_0, float T_min,  float phi);
+
+Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution* initial_solution, int number_local_search_iterations,
+                                          float initial_keep_probability, float final_keep_probability, float phi);
 
 #endif // METAHEURISTICS_H

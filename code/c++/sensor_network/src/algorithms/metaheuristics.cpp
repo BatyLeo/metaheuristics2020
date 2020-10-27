@@ -229,27 +229,50 @@ Solution* receptionOrientedMetaheuristic(int number_iterations, const Solution* 
     return best_solution;
 }
 
-Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution* solution, float T_0, float phi, float T_min){
+Solution* localSearchMetaheuristic(int number_iterations, const Solution* initial_solution) {
+    vector<int> order_vector = solutionToOrderVector(initial_solution);
+    const DataSet* data_set = initial_solution->getDataSet();
+    Solution* best_solution = simpleHeuristic(data_set, order_vector);
+
+    for (int iteration = 0; iteration < number_iterations; iteration++) {
+        pair<int, int> switched_target_indices = randomTwoOptSwitch(order_vector);
+
+        Solution* test_solution = simpleHeuristic(data_set, order_vector);
+
+        int score_difference = test_solution->getScore() - best_solution->getScore();
+
+        // keep the change only if the score is better
+        if (score_difference <= 0) {
+            delete best_solution;
+            best_solution = test_solution;
+            if (score_difference < 0) {
+                cout << "New best score: " << best_solution->getScore() << " iteration: " << iteration << endl;
+            }
+        } else {
+            // switch back
+            twoOptSwitch(order_vector, switched_target_indices.first, switched_target_indices.second);
+            delete test_solution;
+        }
+    }
+
+    return best_solution;
+}
+
+Solution* _simulatedAnnealingMetaheuristic(int number_iterations, const Solution* initial_solution,
+                                             float T_0, float T_min, float phi) {
     float T = T_0;
 
-    vector<int> order_vector = solutionToOrderVector(solution);
+    vector<int> order_vector = solutionToOrderVector(initial_solution);
 
-    const DataSet* data_set = solution->getDataSet();
-    int number_targets = data_set->getNumberTargets();
-
-    // Solution* my_solution;
+    const DataSet* data_set = initial_solution->getDataSet();
 
     Solution* best_solution = simpleHeuristic(data_set, order_vector);
 
     while (T >= T_min) {
+        float sum_keep = 0;
+        float sum_bad_keep = 0;
         for(int iteration=0; iteration<number_iterations; iteration++){
-            int random_target_index_1 = rand() % number_targets;
-            int random_target_index_2 = rand() % number_targets;
-
-            // switch
-            int memory = order_vector[random_target_index_1];
-            order_vector[random_target_index_1] = order_vector[random_target_index_2];
-            order_vector[random_target_index_2] = memory;
+            pair<int, int> switched_target_indices = randomTwoOptSwitch(order_vector);
 
             Solution* test_solution = simpleHeuristic(data_set, order_vector);
 
@@ -260,18 +283,81 @@ Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution*
             if (random_value <= keep_probability){
                 delete best_solution;
                 best_solution = test_solution;
+                sum_keep += 1;
+                if (keep_probability < 1) {
+                    sum_bad_keep += 1;
+                }
             } else {
                 // switch back
-                memory = order_vector[random_target_index_1];
-                order_vector[random_target_index_1] = order_vector[random_target_index_2];
-                order_vector[random_target_index_2] = memory;
+                twoOptSwitch(order_vector, switched_target_indices.first, switched_target_indices.second);
                 delete test_solution;
             }
-
         }
+        cout << "T = " << T << " score: " << best_solution->getScore() << " " << exp(-1 / T) << " " << sum_keep << " " << sum_bad_keep << endl;
         T *= phi;
     }
 
     return best_solution;
 }
 
+Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution* initial_solution, int number_local_search_iterations,
+                                          float initial_keep_probability, float final_keep_probability, float phi) {
+
+    cout << "Figuring out initial and final temperatures..." << endl;
+
+    vector<int> order_vector = solutionToOrderVector(initial_solution);
+    const DataSet* data_set = initial_solution->getDataSet();
+
+    Solution* better_solution = simpleHeuristic(data_set, order_vector); // to understand
+    int initial_score = better_solution->getScore();
+
+    cout << "Initial score: " << initial_score << endl;
+
+    const int n = 10000; // hardcoded... -> parameter ?
+
+    float count = 0;
+    float mean_score_difference = 0;
+    while (count <= n) {
+        // random switch
+        pair<int, int> switched_target_indices = randomTwoOptSwitch(order_vector);
+
+        Solution* test_solution = simpleHeuristic(data_set, order_vector);
+
+        // check if test_solution is worse
+        int score_difference = test_solution->getScore() - initial_score;
+
+        // cout << count << " " << score_difference  << " " << switched_target_indices.first << " " << switched_target_indices.second << endl;
+        if (score_difference > 0) {
+            mean_score_difference += score_difference;
+            count++;
+        }
+
+        // switch back
+        twoOptSwitch(order_vector, switched_target_indices.first, switched_target_indices.second);
+    }
+    mean_score_difference /= n;
+
+    float T_0 = - mean_score_difference / log(initial_keep_probability);
+    float T_min = - 1 / log(final_keep_probability);
+
+    cout << "Mean difference: " << mean_score_difference << endl;
+
+    cout << "Initial temperature: " << T_0 << endl;
+    cout << "Final temperature: " << T_min << endl;
+
+    cout << "Number of temperature steps: " << log(T_min / T_0) / log(phi) << endl;
+    cout << "Total number of iterations: " << log(T_min / T_0) / log(phi) * number_iterations << endl;
+
+    cout << "Starting the simulated annealing..." << endl;
+    Solution* best_solution = _simulatedAnnealingMetaheuristic(number_iterations, initial_solution, T_0, T_min, phi);
+
+    cout << "Simulated annealing done. Current score: " << best_solution->getScore() << endl;
+
+    cout << "Starting local search refining..." << endl;
+
+    best_solution = localSearchMetaheuristic(number_local_search_iterations, best_solution);
+
+    cout << "Final score: " << best_solution->getScore() << endl;
+
+    return best_solution;
+}
