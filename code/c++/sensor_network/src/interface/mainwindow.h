@@ -16,6 +16,8 @@
 #include <algorithms/heuristics.h>
 #include <algorithms/metaheuristics.h>
 #include <tools/writing.h>
+#include "metaheuristic_dialog.h"
+#include "metaheuristic_thread.h"
 
 class MainWindow : public QMainWindow
 {
@@ -51,6 +53,7 @@ private slots:
     void loadDataSet();
     void loadSavedDataSet();
     void saveDataSetAs();
+
 };
 
 #endif // MAINWINDOW_H

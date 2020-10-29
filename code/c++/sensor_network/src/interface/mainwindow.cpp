@@ -54,32 +54,6 @@ void MainWindow::loadDataSet(){
     if(file_name.length()!=0){
         DataSet* new_data_set = new DataSet(2, 1, 1, parseCoordinates(file_name.toStdString()));
 
-        /*int number_targets = new_data_set->getNumberTargets();
-        int reception_level = new_data_set->getReceptionLevel();
-
-        vector<int> seed_vector = vector<int>(reception_level*number_targets, 0);
-        for(int target_index = 0; target_index<number_targets; target_index++){
-            for(int reception = 0; reception<reception_level; reception++){
-                seed_vector[target_index*reception_level+reception] = target_index;
-            }
-        }
-        vector<int> order_vector = vector<int>(number_targets, 0);
-        for(int target_index = 0; target_index<number_targets; target_index++){
-            order_vector[target_index] = target_index;
-        }
-
-        for(int i = 0; i<1; i++){
-            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-            shuffle(seed_vector.begin(), seed_vector.end(), std::default_random_engine(0));
-            Solution* heuristic_solution = shortestPathsHeuristic(new_data_set, seed_vector);
-            Solution* metaheuristic_solution = simulatedAnnealingMetaheuristic(2000, heuristic_solution, 10000, 0.9, 0.01);//seedVectorMetaheuristic(10000, seed_vector, new_data_set);//receptionOrientedMetaheuristic(1000, heuristic_solution);
-            new_data_set->addSolution(heuristic_solution);
-            new_data_set->addSolution(metaheuristic_solution);
-            if(!metaheuristic_solution->checkAdmissible()){
-                cout<<"dommage..."<<endl;
-            }
-        }*/
-
         setDataSet(new_data_set);
     }
     QApplication::restoreOverrideCursor();
@@ -187,15 +161,20 @@ void MainWindow::computeHeuristicSolution(){
 }
 
 void MainWindow::launchMetaheuristic(){
-
-     QApplication::setOverrideCursor(Qt::WaitCursor);
-
     const Solution* initial_solution = solution_model->getSolution();
 
-    Solution* metaheuristic_solution = simulatedAnnealingMetaheuristic(2000, initial_solution, 10000, 0.9, 0.01);
+    MetaheuristicDialog* metaheuristic_dialog = new MetaheuristicDialog(this);
 
-    addSolution(metaheuristic_solution);
+    MetaheuristicThread* metaheuristic_thread = new MetaheuristicThread(10000, initial_solution, 0.5, 0.000000001, 0.9, this);
 
-    QApplication::restoreOverrideCursor();
+    connect(metaheuristic_dialog, &MetaheuristicDialog::rejected, metaheuristic_thread, &MetaheuristicThread::stopMetaheuristic);
+    connect(metaheuristic_thread, &MetaheuristicThread::addScoreAndTemperatureValues, metaheuristic_dialog, &MetaheuristicDialog::addValues);
+    //connect(metaheuristic_thread, &MetaheuristicThread::finished, metaheuristic_dialog, &MetaheuristicDialog::accept);
+    connect(metaheuristic_thread, &MetaheuristicThread::finished, metaheuristic_thread, &MetaheuristicThread::deleteLater);
+    connect(metaheuristic_thread, &MetaheuristicThread::addMetaheuristicSolution, this, &MainWindow::addSolution);
+
+
+    metaheuristic_thread->start();
+    metaheuristic_dialog->show();
 
 }
