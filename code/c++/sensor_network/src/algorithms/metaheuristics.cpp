@@ -131,6 +131,7 @@ Solution* simulatedAnnealingMetaheuristic(int number_iterations, const Solution*
 
         // check if test_solution is worse
         int score_difference = test_solution->getScore() - initial_score;
+        delete test_solution;
 
         // cout << count << " " << score_difference  << " " << switched_target_indices.first << " " << switched_target_indices.second << endl;
         if (score_difference > 0) {

@@ -2,11 +2,11 @@
 
 void my_main() {
     vector<pair<float, float> > coordinates = parseCoordinates("/Users/taleboy/Desktop/metaheuristics2020/instances/captANOR1500_18_100.txt");
-    float captation_radius = 1;
     float reception_radius = 1;
-    int reception_level = 3;
+    float communication_radius = 2;
+    int reception_level = 1;
 
-    DataSet* data_set = new DataSet(reception_radius, captation_radius, reception_level, coordinates);
+    DataSet* data_set = new DataSet(communication_radius, reception_radius, reception_level, coordinates);
     int number_targets = data_set->getNumberTargets();
 
     vector<int> seed_vector(number_targets * reception_level, 0);
