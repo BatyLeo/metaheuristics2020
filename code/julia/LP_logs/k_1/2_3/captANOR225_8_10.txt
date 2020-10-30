@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:01:33 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:18 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 30465 rows, 22735 columns and 105854 nonzeros
@@ -14,10 +14,10 @@ Concurrent LP optimizer: dual simplex and barrier
 Showing barrier log only...
 
 Presolve removed 44 rows and 1 columns
-Presolve time: 0.13s
+Presolve time: 0.23s
 Presolved: 30421 rows, 22734 columns, 105515 nonzeros
 
-Ordering time: 0.22s
+Ordering time: 0.21s
 
 Barrier statistics:
  Dense cols : 143
@@ -35,7 +35,7 @@ Iter       Primal          Dual         Primal    Dual     Compl     Time
    4   2.05701898e+02 -7.57330751e+02  1.39e-11 3.06e-13  1.59e-02     1s
    5   1.65252638e+02 -6.81115588e+01  4.10e-12 5.97e-14  3.85e-03     1s
    6   7.83531444e+01 -3.81077309e+01  6.78e-13 3.35e-14  1.92e-03     1s
-   7   3.22856406e+01 -5.81359928e+00  2.17e-13 2.78e-15  6.28e-04     2s
+   7   3.22856406e+01 -5.81359928e+00  2.17e-13 2.78e-15  6.28e-04     1s
    8   1.86762988e+01  9.73353960e-01  2.64e-13 9.99e-16  2.92e-04     2s
    9   1.15497364e+01  2.27703736e+00  1.49e-12 7.77e-16  1.53e-04     2s
   10   1.07564699e+01  3.11260269e+00  1.15e-12 9.99e-16  1.26e-04     2s
@@ -44,22 +44,22 @@ Iter       Primal          Dual         Primal    Dual     Compl     Time
   13   8.46853583e+00  5.46401575e+00  2.82e-12 8.88e-16  4.95e-05     2s
   14   8.00728073e+00  6.67660710e+00  4.09e-12 1.22e-15  2.19e-05     2s
   15   7.73781068e+00  7.16725128e+00  4.32e-12 1.67e-15  9.41e-06     2s
-  16   7.55686397e+00  7.46485677e+00  1.71e-12 1.14e-13  1.52e-06     3s
-  17   7.52156062e+00  7.49060612e+00  4.74e-12 8.67e-13  5.10e-07     3s
-  18   7.50544694e+00  7.49867813e+00  4.35e-12 6.47e-13  1.12e-07     3s
+  16   7.55686397e+00  7.46485677e+00  1.71e-12 1.14e-13  1.52e-06     2s
+  17   7.52156062e+00  7.49060612e+00  4.74e-12 8.67e-13  5.10e-07     2s
+  18   7.50544694e+00  7.49867813e+00  4.35e-12 6.47e-13  1.12e-07     2s
   19   7.50004985e+00  7.49996476e+00  2.34e-11 8.77e-13  1.40e-09     3s
   20   7.50000005e+00  7.49999996e+00  4.25e-12 1.30e-12  1.40e-12     3s
   21   7.50000005e+00  7.49999990e+00  4.13e-12 9.76e-08  1.40e-12     3s
 
-Barrier solved model in 21 iterations and 3.27 seconds
+Barrier solved model in 21 iterations and 2.76 seconds
 Optimal objective 7.50000005e+00
 
 Crossover log...
 
-       0 DPushes remaining with DInf 0.0000000e+00                 4s
+       0 DPushes remaining with DInf 0.0000000e+00                 3s
 
-    7808 PPushes remaining with PInf 0.0000000e+00                 4s
+    7808 PPushes remaining with PInf 0.0000000e+00                 3s
 
 Solved with dual simplex
-Solved in 3277 iterations and 4.08 seconds
+Solved in 3277 iterations and 3.31 seconds
 Optimal objective  7.500000000e+00

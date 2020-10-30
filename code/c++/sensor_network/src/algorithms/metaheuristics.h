@@ -24,5 +24,6 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
                                                       float initial_keep_probability, float final_keep_probability, float phi,
                                                       function<bool ()> continue_function, function<void (int, float)> callback_function);
 
+Solution* multipleNeighborhoodsSearch(int number_loops, const Solution* initial_solution, int k_max);
 
 #endif // METAHEURISTICS_H

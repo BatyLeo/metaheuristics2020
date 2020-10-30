@@ -224,3 +224,38 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
 
     return best_solution;
 }
+
+Solution* multipleNeighborhoodsSearch(int number_loops, const Solution* initial_solution, int k_max) {
+    vector<int> order_vector = solutionToOrderVector(initial_solution);
+    const DataSet* data_set = initial_solution->getDataSet();
+    Solution* best_solution = simpleHeuristic(data_set, order_vector);
+
+    for (int loop = 0; loop < number_loops; loop++) {
+        int k = 2;
+        while (k <= k_max) {
+            vector<int> reverse_indices = randomKOptSwitch(order_vector, k);
+
+            Solution* test_solution = simpleHeuristic(data_set, order_vector);
+
+            int score_difference = test_solution->getScore() - best_solution->getScore();
+
+            // keep the change only if the score is better
+            if (score_difference <= 0) {
+                delete best_solution;
+                best_solution = test_solution;
+                if (score_difference < 0) {
+                    cout << "New best score: " << best_solution->getScore() << " iteration: " << loop << endl;
+                    k = 2;
+                } else {
+                    k++;
+                }
+            } else {
+                // switch back
+                kOptSwitch(order_vector, reverse_indices);
+                k++;
+                delete test_solution;
+            }
+        }
+    }
+    return best_solution;
+}

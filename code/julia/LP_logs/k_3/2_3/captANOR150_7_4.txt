@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:01:12 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:10 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 17523 rows, 13066 columns and 61060 nonzeros
@@ -17,7 +17,7 @@ Presolve removed 32 rows and 1 columns
 Presolve time: 0.08s
 Presolved: 17491 rows, 13065 columns, 60691 nonzeros
 
-Ordering time: 0.08s
+Ordering time: 0.06s
 
 Barrier statistics:
  Dense cols : 94
@@ -50,7 +50,7 @@ Iter       Primal          Dual         Primal    Dual     Compl     Time
   19   1.70000000e+01  1.69999998e+01  9.38e-13 2.44e-15  6.54e-12     1s
   20   1.70000000e+01  1.70000000e+01  1.95e-12 2.57e-13  6.54e-15     1s
 
-Barrier solved model in 20 iterations and 1.38 seconds
+Barrier solved model in 20 iterations and 1.16 seconds
 Optimal objective 1.70000000e+01
 
 Crossover log...
@@ -60,5 +60,5 @@ Crossover log...
     8213 PPushes remaining with PInf 0.0000000e+00                 1s
 
 Solved with dual simplex
-Solved in 2992 iterations and 1.59 seconds
+Solved in 2992 iterations and 1.35 seconds
 Optimal objective  1.700000000e+01

@@ -17,4 +17,10 @@ void my_main();
 
 void my_main_2();
 
+void my_main_3();
+
+void my_main_4();
+
+void my_main_5();
+
 #endif // SCRIPTS_H

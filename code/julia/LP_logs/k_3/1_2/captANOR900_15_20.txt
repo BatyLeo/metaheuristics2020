@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:11:25 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:13:53 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 82211 rows, 61207 columns and 275667 nonzeros
@@ -14,11 +14,11 @@ Concurrent LP optimizer: dual simplex and barrier
 Showing barrier log only...
 
 Presolve removed 279 rows and 10 columns
-Presolve time: 0.40s
+Presolve time: 0.41s
 Presolved: 81932 rows, 61197 columns, 274280 nonzeros
 
 Elapsed ordering time = 5s
-Ordering time: 6.71s
+Ordering time: 5.59s
 
 Barrier statistics:
  AA' NZ     : 1.838e+06
@@ -28,18 +28,19 @@ Barrier statistics:
 
                   Objective                Residual
 Iter       Primal          Dual         Primal    Dual     Compl     Time
-   0   2.44422016e+05 -3.23037444e+05  2.42e+05 1.13e-01  1.40e+02    11s
-   1   1.71482811e+05 -5.44677796e+05  1.24e+05 1.73e-01  7.02e+01    15s
-   2   8.18928292e+04 -6.95151401e+05  4.72e+04 2.97e-02  2.47e+01    18s
-   3   5.17556356e+04 -4.66378054e+05  2.63e+04 2.45e-13  1.10e+01    21s
-   4   1.50961935e+04 -1.21571614e+05  7.74e+03 1.08e-12  3.38e+00    25s
-   5   9.29473503e+02 -2.78728024e+04  5.36e+01 5.04e-13  1.92e-01    29s
-   6   8.31826499e+02 -3.09221300e+03  1.23e-09 6.93e-14  2.40e-02    33s
+   0   2.44422016e+05 -3.23037444e+05  2.42e+05 1.13e-01  1.40e+02     9s
+   1   1.71482811e+05 -5.44677796e+05  1.24e+05 1.73e-01  7.02e+01    13s
+   2   8.18928292e+04 -6.95151401e+05  4.72e+04 2.97e-02  2.47e+01    15s
+   3   5.17556356e+04 -4.66378054e+05  2.63e+04 2.45e-13  1.10e+01    18s
+   4   1.50961935e+04 -1.21571614e+05  7.74e+03 1.08e-12  3.38e+00    21s
+   5   9.29473503e+02 -2.78728024e+04  5.36e+01 5.04e-13  1.92e-01    24s
+   6   8.31826499e+02 -3.09221300e+03  1.23e-09 6.93e-14  2.40e-02    27s
+   7   8.11538972e+02 -3.49039324e+02  5.97e-10 1.84e-14  7.11e-03    30s
 
-Barrier performed 6 iterations in 34.75 seconds
+Barrier performed 7 iterations in 30.52 seconds
 Barrier solve interrupted - model solved by another algorithm
 
 
 Solved with dual simplex
-Solved in 25524 iterations and 34.80 seconds
+Solved in 25524 iterations and 30.55 seconds
 Optimal objective  2.442861207e+02

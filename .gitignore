@@ -14,3 +14,5 @@
 *.pri
 *build
 code/c++/sensor_network/main.cpp
+*.so
+

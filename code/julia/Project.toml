@@ -2,4 +2,5 @@
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+PackageCompiler = "9b87118b-4619-50d2-8e1e-99f35a4d4d9d"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"

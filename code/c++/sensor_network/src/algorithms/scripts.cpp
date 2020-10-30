@@ -77,3 +77,71 @@ void my_main_2() {
     }
     return;
 }
+
+void my_main_3() {
+    vector<int> order_vector{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    vector<int> reverse_target_indices = randomKOptSwitch(order_vector, 9);
+
+    for (int i = 0; i < order_vector.size(); i++) {
+        cout << order_vector[i] << endl;
+    }
+
+    cout << "\n";
+
+    kOptSwitch(order_vector, reverse_target_indices);
+    for (int i = 0; i < order_vector.size(); i++) {
+        cout << order_vector[i] << endl;
+    }
+    return;
+}
+
+void my_main_4() {
+    string instance = "captANOR1500_18_100";
+    vector<pair<float, float> > coordinates = parseCoordinates("/Users/taleboy/Desktop/metaheuristics2020/instances/" + instance + ".txt");
+    float reception_radius = 1;
+    float communication_radius = 1;
+    int reception_level = 1;
+
+    DataSet* data_set = new DataSet(communication_radius, reception_radius, reception_level, coordinates);
+    int number_targets = data_set->getNumberTargets();
+    string solutions_folder = "/Users/taleboy/Desktop/metaheuristics2020/solutions/";
+    string solution_path = solutions_folder + "/k_" + to_string(reception_level) + "/" + to_string((int)reception_radius) + "_" + to_string((int)communication_radius) + "/" + instance + ".txt";
+    vector<bool> sensor_placement = parseSensorPlacement(solution_path, number_targets);
+
+    Solution* initial_solution = new Solution(data_set, sensor_placement);
+
+    Solution* best_solution = multipleNeighborhoodsSearch(1e5, initial_solution, 5);
+
+    cout << "Done !" << endl;
+
+    cout << "Best solution admissible ? " << best_solution->checkAdmissible() << endl;
+
+    delete initial_solution;
+    delete best_solution;
+}
+
+void my_main_5() {
+    string instance = "captANOR1500_18_100";
+    vector<pair<float, float> > coordinates = parseCoordinates("/Users/taleboy/Desktop/metaheuristics2020/instances/" + instance + ".txt");
+    float reception_radius = 1;
+    float communication_radius = 1;
+    int reception_level = 1;
+
+    DataSet* data_set = new DataSet(communication_radius, reception_radius, reception_level, coordinates);
+    int number_targets = data_set->getNumberTargets();
+    string solutions_folder = "/Users/taleboy/Desktop/metaheuristics2020/solutions/";
+    string solution_path = solutions_folder + "/k_" + to_string(reception_level) + "/" + to_string((int)reception_radius) + "_" + to_string((int)communication_radius) + "/" + instance + ".txt";
+    vector<bool> sensor_placement = parseSensorPlacement(solution_path, number_targets);
+
+    Solution* initial_solution = new Solution(data_set, sensor_placement);
+
+    Solution* best_solution = localSearchMetaheuristic(1e6, initial_solution); // multipleNeighborhoodsSearch(1e5, initial_solution, 5);
+
+    cout << "Done !" << endl;
+
+    cout << "Best solution admissible ? " << best_solution->checkAdmissible() << endl;
+
+    delete initial_solution;
+    delete best_solution;
+}

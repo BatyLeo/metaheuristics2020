@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Mon Oct 26 19:01:48 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:39 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 16613 rows, 12146 columns and 60089 nonzeros
@@ -14,10 +14,10 @@ Concurrent LP optimizer: dual simplex and barrier
 Showing barrier log only...
 
 Presolve removed 37 rows and 1 columns
-Presolve time: 0.12s
+Presolve time: 0.07s
 Presolved: 16576 rows, 12145 columns, 59680 nonzeros
 
-Ordering time: 0.09s
+Ordering time: 0.05s
 
 Barrier statistics:
  AA' NZ     : 2.458e+05
@@ -29,8 +29,8 @@ Barrier statistics:
 Iter       Primal          Dual         Primal    Dual     Compl     Time
    0   1.17550928e+05 -5.13316098e+04  1.17e+05 7.91e-02  8.12e+01     0s
    1   4.04735493e+04 -5.88095823e+04  3.26e+04 1.69e-01  3.30e+01     0s
-   2   1.37992407e+04 -8.30128811e+04  9.45e+03 1.62e-02  7.84e+00     1s
-   3   7.24114099e+03 -4.18527899e+04  3.65e+03 4.80e-04  2.52e+00     1s
+   2   1.37992407e+04 -8.30128811e+04  9.45e+03 1.62e-02  7.84e+00     0s
+   3   7.24114099e+03 -4.18527899e+04  3.65e+03 4.80e-04  2.52e+00     0s
    4   6.40895715e+03 -2.09854816e+04  3.03e+03 1.26e-04  1.65e+00     1s
    5   6.08892130e+03 -7.57438676e+03  2.83e+03 1.33e-06  1.47e+00     1s
    6   9.59268211e+02 -1.14393875e+04  1.76e+02 1.78e-12  4.26e-01     1s
@@ -39,9 +39,9 @@ Iter       Primal          Dual         Primal    Dual     Compl     Time
    9   2.07151973e+02 -5.38127818e+01  4.80e-04 9.99e-16  8.01e-03     1s
   10   8.45527580e+01  1.22162814e-01  1.44e-04 6.66e-16  2.59e-03     1s
   11   6.92085822e+01  2.44213151e+01  4.85e-05 5.55e-16  1.38e-03     1s
-  12   6.09067314e+01  4.01965944e+01  1.96e-05 6.66e-16  6.36e-04     2s
-  13   5.73610709e+01  4.83254909e+01  8.48e-06 5.55e-16  2.78e-04     2s
-  14   5.54435020e+01  5.05788621e+01  4.64e-06 3.33e-16  1.49e-04     2s
+  12   6.09067314e+01  4.01965944e+01  1.96e-05 6.66e-16  6.36e-04     1s
+  13   5.73610709e+01  4.83254909e+01  8.48e-06 5.55e-16  2.78e-04     1s
+  14   5.54435020e+01  5.05788621e+01  4.64e-06 3.33e-16  1.49e-04     1s
   15   5.44983358e+01  5.15820852e+01  2.86e-06 5.55e-16  8.96e-05     2s
   16   5.44055212e+01  5.20033623e+01  2.70e-06 6.66e-16  7.38e-05     2s
   17   5.34546063e+01  5.23224743e+01  1.22e-06 3.33e-16  3.48e-05     2s
@@ -52,16 +52,16 @@ Iter       Primal          Dual         Primal    Dual     Compl     Time
   22   5.27609469e+01  5.26612974e+01  1.21e-07 4.44e-16  3.06e-06     2s
   23   5.26997488e+01  5.26725166e+01  3.20e-08 5.55e-16  8.36e-07     2s
   24   5.26851288e+01  5.26754115e+01  1.14e-08 6.66e-16  2.98e-07     2s
-  25   5.26798526e+01  5.26761094e+01  4.15e-09 3.33e-16  1.15e-07     3s
-  26   5.26776696e+01  5.26764773e+01  8.61e-10 5.55e-16  3.66e-08     3s
-  27   5.26769618e+01  5.26765155e+01  3.80e-10 6.71e-12  1.37e-08     3s
-  28   5.26765704e+01  5.26765506e+01  6.31e-10 2.47e-12  6.08e-10     3s
+  25   5.26798526e+01  5.26761094e+01  4.15e-09 3.33e-16  1.15e-07     2s
+  26   5.26776696e+01  5.26764773e+01  8.61e-10 5.55e-16  3.66e-08     2s
+  27   5.26769618e+01  5.26765155e+01  3.80e-10 6.71e-12  1.37e-08     2s
+  28   5.26765704e+01  5.26765506e+01  6.31e-10 2.47e-12  6.08e-10     2s
   29   5.26765621e+01  5.26765552e+01  5.32e-10 3.02e-13  2.12e-10     3s
   30   5.26765592e+01  5.26765556e+01  5.22e-10 1.27e-13  1.11e-10     3s
   31   5.26765576e+01  5.26765558e+01  6.83e-08 3.32e-14  5.50e-11     3s
   32   5.26765559e+01  5.26765558e+01  6.74e-09 1.59e-14  1.25e-12     3s
 
-Barrier solved model in 32 iterations and 3.35 seconds
+Barrier solved model in 32 iterations and 2.76 seconds
 Optimal objective 5.26765559e+01
 
 Crossover log...
@@ -69,14 +69,14 @@ Crossover log...
        0 DPushes remaining with DInf 0.0000000e+00                 3s
 
     3825 PPushes remaining with PInf 4.7139360e-05                 3s
-       0 PPushes remaining with PInf 0.0000000e+00                 4s
+       0 PPushes remaining with PInf 0.0000000e+00                 3s
 
-  Push phase complete: Pinf 0.0000000e+00, Dinf 7.2945792e-02      4s
+  Push phase complete: Pinf 0.0000000e+00, Dinf 7.2945792e-02      3s
 
 Iteration    Objective       Primal Inf.    Dual Inf.      Time
-    6351    5.2676556e+01   0.000000e+00   7.294579e-02      4s
-    6523    5.2676556e+01   0.000000e+00   0.000000e+00      4s
+    6351    5.2676556e+01   0.000000e+00   7.294579e-02      3s
+    6523    5.2676556e+01   0.000000e+00   0.000000e+00      3s
 
 Solved with barrier
-Solved in 6523 iterations and 3.84 seconds
+Solved in 6523 iterations and 3.13 seconds
 Optimal objective  5.267655584e+01
