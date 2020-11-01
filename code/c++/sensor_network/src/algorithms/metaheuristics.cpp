@@ -184,8 +184,8 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
 
     vector<int> order_vector = solutionToOrderVector(initial_solution);
 
-    // to improve with copy constructor
     Solution* best_solution = simpleHeuristic(data_set, order_vector);
+    Solution* current_solution = new Solution(best_solution);
 
     callback_function(best_solution->getScore(), T);
 
@@ -197,13 +197,13 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
 
             Solution* test_solution = simpleHeuristic(data_set, order_vector);
 
-            int score_difference = test_solution->getScore() - best_solution->getScore();
+            int score_difference = test_solution->getScore() - current_solution->getScore();
             float keep_probability = exp(-score_difference / T);
 
             float random_value = rand() / (float)RAND_MAX;
             if (random_value <= keep_probability){
-                delete best_solution;
-                best_solution = test_solution;
+                delete current_solution;
+                current_solution = test_solution;
                 sum_keep += 1;
                 if (keep_probability < 1) {
                     sum_bad_keep += 1;
@@ -217,10 +217,17 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
             if(!continue_function()){
                 break;
             }
+
+            if(current_solution->getScore()<best_solution->getScore()){
+                delete best_solution;
+                best_solution = new Solution(current_solution);
+            }
         }
-        callback_function(best_solution->getScore(), T);
+        callback_function(current_solution->getScore(), T);
         T *= phi;
     }
+
+    delete current_solution;
 
     return best_solution;
 }

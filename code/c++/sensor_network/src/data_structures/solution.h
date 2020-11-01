@@ -16,6 +16,7 @@ private:
 
 public:
     Solution(const DataSet* data_set);
+    Solution(const Solution* solution);
     Solution(const DataSet* data_set, const vector<bool> &sensor_placement);
     ~Solution();
 
