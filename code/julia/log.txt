@@ -1,0 +1,37 @@
+
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:26:10 2020
+
+Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
+Optimize a model with 44871 rows, 32902 columns and 162998 nonzeros
+Model fingerprint: 0xa0fa6e38
+Coefficient statistics:
+  Matrix range     [1e+00, 2e+03]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+00]
+Presolve removed 70 rows and 1 columns
+Presolve time: 0.54s
+Presolved: 44801 rows, 32901 columns, 162044 nonzeros
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   2.872000e+03   0.000000e+00      1s
+    5258    2.1879582e+02   1.971756e+05   0.000000e+00      5s
+    6992    2.1987992e+02   1.000246e+05   0.000000e+00     10s
+    8890    2.2201536e+02   1.948019e+05   0.000000e+00     15s
+   10195    2.2211883e+02   9.908333e+04   0.000000e+00     20s
+   11728    2.2327913e+02   8.413631e+04   0.000000e+00     25s
+   13120    2.2362146e+02   1.330806e+05   0.000000e+00     30s
+   14743    2.2383390e+02   9.154412e+05   0.000000e+00     35s
+   16050    2.2398953e+02   7.450381e+04   0.000000e+00     40s
+   16982    2.2401440e+02   5.271887e+04   0.000000e+00     46s
+   17884    2.2404075e+02   2.659054e+04   0.000000e+00     50s
+   18702    2.2404966e+02   5.216117e+03   0.000000e+00     56s
+   19588    2.2405308e+02   2.516561e+03   0.000000e+00     60s
+   20441    2.2405467e+02   2.592459e+03   0.000000e+00     65s
+   21535    2.2405496e+02   2.172022e+02   0.000000e+00     70s
+   23597    2.2405695e+02   1.330618e+01   0.000000e+00     75s
+   24437    2.2403685e+02   0.000000e+00   2.704239e+00     80s
+   24973    2.2403682e+02   0.000000e+00   0.000000e+00     82s
+
+Solved in 24973 iterations and 81.71 seconds
+Optimal objective  2.240368199e+02

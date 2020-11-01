@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:22 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:30:56 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 15353 rows, 11401 columns and 51496 nonzeros
@@ -9,34 +9,13 @@ Coefficient statistics:
   Objective range  [1e+00, 1e+00]
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e+00, 2e+00]
-
-Concurrent LP optimizer: dual simplex and barrier
-Showing barrier log only...
-
 Presolve removed 36 rows and 1 columns
-Presolve time: 0.06s
+Presolve time: 0.04s
 Presolved: 15317 rows, 11400 columns, 51250 nonzeros
 
-Ordering time: 0.35s
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.180000e+02   0.000000e+00      0s
+    3689    4.9833333e+01   0.000000e+00   0.000000e+00      1s
 
-Barrier statistics:
- AA' NZ     : 2.816e+05
- Factor NZ  : 2.008e+06 (roughly 27 MBytes of memory)
- Factor Ops : 8.013e+08 (less than 1 second per iteration)
- Threads    : 1
-
-                  Objective                Residual
-Iter       Primal          Dual         Primal    Dual     Compl     Time
-   0   5.72703077e+03 -1.69756896e+04  5.37e+03 3.68e-02  7.72e+00     1s
-   1   4.75607850e+03 -1.78141772e+04  2.50e+03 1.13e-01  3.32e+00     1s
-   2   2.64130390e+03 -7.04200388e+03  1.34e+03 4.21e-03  9.90e-01     1s
-   3   2.01535566e+02 -1.52980019e+03  1.37e-11 8.62e-14  5.70e-02     1s
-   4   1.87765724e+02 -7.19928256e+01  1.25e-12 1.20e-14  8.55e-03     1s
-
-Barrier performed 4 iterations in 1.45 seconds
-Barrier solve interrupted - model solved by another algorithm
-
-
-Solved with dual simplex
-Solved in 3689 iterations and 1.45 seconds
+Solved in 3689 iterations and 0.89 seconds
 Optimal objective  4.983333333e+01

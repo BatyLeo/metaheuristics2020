@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:15:05 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:42:38 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 172031 rows, 128572 columns and 597024 nonzeros
@@ -9,39 +9,28 @@ Coefficient statistics:
   Objective range  [1e+00, 1e+00]
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e+00, 3e+00]
-
-Concurrent LP optimizer: dual simplex and barrier
-Showing barrier log only...
-
 Presolve removed 51 rows and 1 columns
-Presolve time: 0.82s
+Presolve time: 2.29s
 Presolved: 171980 rows, 128571 columns, 595840 nonzeros
 
-Elapsed ordering time = 5s
-Elapsed ordering time = 10s
-Ordering time: 10.42s
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   2.625000e+03   0.000000e+00      2s
+    2893    6.0741796e+01   3.836959e+03   0.000000e+00      5s
+    6583    6.3316399e+01   2.023348e+03   0.000000e+00     10s
+    8995    6.4627955e+01   6.960038e+02   0.000000e+00     15s
+   11387    6.5197418e+01   6.292901e+02   0.000000e+00     21s
+   12254    6.5257538e+01   8.013239e+02   0.000000e+00     25s
+   15282    6.5612859e+01   1.001999e+04   0.000000e+00     30s
+   16403    6.5640972e+01   4.088547e+03   0.000000e+00     35s
+   17413    6.5646829e+01   1.082174e+04   0.000000e+00     41s
+   18627    6.5658874e+01   1.261408e+03   0.000000e+00     46s
+   19840    6.5659079e+01   4.082299e+02   0.000000e+00     50s
+   20804    6.5659298e+01   5.818967e+02   0.000000e+00     55s
+   22271    6.5659394e+01   1.550341e+02   0.000000e+00     60s
+   24067    6.5659423e+01   1.020649e+02   0.000000e+00     66s
+   25207    6.5659437e+01   1.746127e+01   0.000000e+00     71s
+   27010    6.5651358e+01   0.000000e+00   3.691051e+01     75s
+   27634    6.5651352e+01   0.000000e+00   0.000000e+00     77s
 
-Barrier statistics:
- Dense cols : 286
- AA' NZ     : 5.051e+06
- Factor NZ  : 4.252e+07 (roughly 500 MBytes of memory)
- Factor Ops : 6.847e+10 (roughly 3 seconds per iteration)
- Threads    : 1
-
-                  Objective                Residual
-Iter       Primal          Dual         Primal    Dual     Compl     Time
-   0   3.20398165e+04 -2.44988385e+05  3.13e+04 1.30e-02  7.05e+00    22s
-   1   2.79575765e+04 -2.21421926e+05  1.79e+04 1.03e-01  4.90e+00    28s
-   2   2.27556623e+04 -1.29471624e+05  1.22e+04 3.76e-03  1.26e+00    35s
-   3   1.13485760e+03 -1.04312614e+04  1.32e+02 3.84e-11  4.16e-02    42s
-   4   8.72283088e+02 -4.29178622e+02  2.06e-11 4.82e-12  3.79e-03    48s
-   5   8.50914417e+02 -1.74491071e+02  2.41e-11 7.15e-13  2.99e-03    54s
-   6   4.78855783e+02 -1.11592120e+02  7.89e-11 9.95e-14  1.72e-03    62s
-
-Barrier performed 6 iterations in 62.58 seconds
-Barrier solve interrupted - model solved by another algorithm
-
-
-Solved with dual simplex
-Solved in 27634 iterations and 62.64 seconds
+Solved in 27634 iterations and 77.47 seconds
 Optimal objective  6.565135152e+01

@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:21 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:30:55 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 4801 rows, 3487 columns and 17202 nonzeros

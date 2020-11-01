@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:02 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:30:42 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 2867 rows, 2074 columns and 10214 nonzeros
@@ -17,5 +17,5 @@ Iteration    Objective       Primal Inf.    Dual Inf.      Time
        0    0.0000000e+00   2.720000e+02   0.000000e+00      0s
     1431    3.9000000e+01   0.000000e+00   0.000000e+00      0s
 
-Solved in 1431 iterations and 0.10 seconds
+Solved in 1431 iterations and 0.11 seconds
 Optimal objective  3.900000000e+01

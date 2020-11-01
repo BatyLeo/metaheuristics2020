@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 16:03:03 2020
+Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:30:43 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 9339 rows, 6928 columns and 34462 nonzeros
@@ -9,39 +9,13 @@ Coefficient statistics:
   Objective range  [1e+00, 1e+00]
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e+00, 2e+00]
-
-Concurrent LP optimizer: dual simplex and barrier
-Showing barrier log only...
-
 Presolve removed 20 rows and 1 columns
-Presolve time: 0.04s
+Presolve time: 0.02s
 Presolved: 9319 rows, 6927 columns, 34195 nonzeros
 
-Ordering time: 0.24s
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   2.880000e+02   0.000000e+00      0s
+    4415    1.1000000e+01   0.000000e+00   0.000000e+00      1s
 
-Barrier statistics:
- AA' NZ     : 2.684e+05
- Factor NZ  : 1.128e+06 (roughly 16 MBytes of memory)
- Factor Ops : 3.903e+08 (less than 1 second per iteration)
- Threads    : 1
-
-                  Objective                Residual
-Iter       Primal          Dual         Primal    Dual     Compl     Time
-   0   2.54106312e+03 -9.38102674e+03  2.46e+03 1.25e-02  4.83e+00     1s
-   1   1.89638703e+03 -7.97842306e+03  1.44e+03 1.57e-01  3.02e+00     1s
-   2   1.61956733e+03 -5.26595122e+03  7.84e+02 2.06e-02  1.00e+00     1s
-   3   1.42177308e+02 -8.80202347e+02  8.06e+00 1.62e-13  6.03e-02     1s
-   4   1.20918565e+02 -5.54815791e+01  3.50e-13 2.33e-14  9.53e-03     1s
-   5   1.08883723e+02 -3.40820053e+01  6.33e-13 1.27e-14  7.73e-03     1s
-   6   3.78807739e+01 -1.27058310e+01  3.73e-13 3.66e-15  2.73e-03     1s
-   7   1.83542778e+01  1.28501290e+00  1.74e-13 7.77e-16  9.22e-04     2s
-   8   1.50688539e+01  4.13259609e+00  2.86e-12 3.33e-16  5.91e-04     2s
-   9   1.33963808e+01  7.69978123e+00  1.00e-12 4.44e-16  3.08e-04     2s
-
-Barrier performed 9 iterations in 1.91 seconds
-Barrier solve interrupted - model solved by another algorithm
-
-
-Solved with dual simplex
-Solved in 4415 iterations and 1.91 seconds
+Solved in 4415 iterations and 0.86 seconds
 Optimal objective  1.100000000e+01

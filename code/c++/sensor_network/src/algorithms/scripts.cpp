@@ -111,7 +111,7 @@ void my_main_4() {
 
     Solution* initial_solution = new Solution(data_set, sensor_placement);
 
-    Solution* best_solution = multipleNeighborhoodsSearch(1e5, initial_solution, 5);
+    Solution* best_solution = multipleNeighborhoodsSearch(1e6, initial_solution, 4);
 
     cout << "Done !" << endl;
 

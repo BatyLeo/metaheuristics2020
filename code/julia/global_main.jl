@@ -31,6 +31,7 @@ for instance_file in instance_file_names
 
             # build and solve the MIP
             model = build_LP(dataset, log_file_path="LP_logs/k_$reception_level/$(reception_radius)_$communication_radius/$instance_file.txt")
+            # set_optimizer_attribute(model, "Method", 1)
             inferior_bound = solve_LP!(model)
 
             println("Inferior bound: $inferior_bound")
