@@ -7,6 +7,8 @@
 
 % other packages
 \usepackage{packages}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 % Pour le glossaire
 % \usepackage[toc, automake, acronym]{glossaries}
@@ -94,7 +96,61 @@ On note $\delta_s = 1$.
 
 \subsection{heuristique 1}
 
+\begin{algorithm}[H]
+  \caption{Heuristique par captations de coût minimal successives}
+  \label{Heuristique par captations de coût minimal successives}
+  \begin{algorithmic}
+      \STATE \textbf{Input:}
+      \STATE $(T, G^{capt}, G^{com}, k)$ : une instance du problème
+      \STATE $L$ : une liste contenant $k$ fois chaque cible de $T$ dans un ordre quelconque
+      \STATE
+      \STATE \textbf{Output:} $N \subset T$ : le sous-ensemble de cibles sur lesquelles placer des capteurs
+      \STATE
+      \STATE $N = \emptyset$
+      \FORALL{$t \in L$}
+          \STATE Choisir $t'$ tel que $(t, t') \in E^{capt}$ et qui minimise le plus court chemin vers $s \cup N$ dans $G^{com}$
+          \STATE $E^{capt} = E^{capt} \setminus (t, t')$
+          \STATE Ajouter à $N$ les cibles situées sur le plus court chemin de $t'$ à $s \cup N$ dans $G^{com}$
+      \ENDFOR
+      \STATE Renvoyer $N$
+  \end{algorithmic}
+\end{algorithm}
+
 \subsection{heuristique 2}
+
+\begin{algorithm}[H]
+  \caption{Heuristique gloutonne avec relation d'ordre sur les cibles}
+  \label{Heuristique gloutonne avec relation d'ordre sur les cibles}
+  \begin{algorithmic}
+      \STATE \textbf{Input:}
+      \STATE $(T, G^{capt}, G^{com},k)$ : une instance du problème
+      \STATE $\prec$ : une relation d'ordre sur les cibles
+      \STATE
+      \STATE \textbf{Output:} $N \subset T$ : le sous-ensemble de cibles sur lesquelles placer des capteurs
+      \STATE
+      \STATE $N = \emptyset$
+      \STATE $Q = \{t \in T | (s, t) \in E^{com}\}$
+      \STATE $U = \emptyset$
+      \WHILE{Toutes les cibles n'ont pas au moins $k$ voisins appartenant à $N$ dans $G^{capt}$}
+          \IF{$Q \setminus U \neq \emptyset$}
+              \STATE Choisir $t$ dans $Q \setminus U$ maximal pour la relation d'ordre $\prec$
+              \IF{$t$ a au moins un voisin dans $G^{capt}$ ayant moins de $k$ voisins dans $N$}
+                  \STATE $Q  = Q \setminus \{t\}$
+                  \STATE $Q  = Q \cup \{t' | (t, t') \in E^{com}\}$
+                  \STATE $N  = N \cup \{t\}$
+              \ELSE
+                  \STATE $U  = U \cup \{t\}$
+              \ENDIF
+          \ELSE 
+              \STATE Choisir $t$ dans $Q \cap U$ maximal pour la relation d'ordre $\prec$
+              \STATE $Q  = Q \setminus \{t\}$
+              \STATE $Q  = Q \cup \{t' | (t, t') \in E^{com}\}$
+              \STATE $N  = N \cup \{t\}$
+          \ENDIF
+      \ENDWHILE
+      \STATE Renvoyer $N$
+  \end{algorithmic}
+\end{algorithm}
 
 \section{Métaheuristiques}
 
