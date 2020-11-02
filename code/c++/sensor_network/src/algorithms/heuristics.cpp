@@ -117,23 +117,25 @@ Solution* simpleHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
         int target_index = adjacent_targets_without_sensors.top();
         adjacent_targets_without_sensors.pop();
 
-        // checking the reception potential of the target
-        // if all the reception neighbors of the target already have enough reception, it has no reception potential
-        no_reception_potential[target_index] = true;
-        for(list<int>::const_iterator reception_neighbor_iterator = data_set->getReceptionNeighbors(target_index).begin(); reception_neighbor_iterator != data_set->getReceptionNeighbors(target_index).end(); reception_neighbor_iterator++){
-            int reception_neighbor_index = *reception_neighbor_iterator;
-            if(recepting_sensor_count[reception_neighbor_index]<reception_level){
-                no_reception_potential[target_index] = false;
-                break;
+        if(!no_reception_potential[target_index]){
+            // checking the reception potential of the target
+            // if all the reception neighbors of the target already have enough reception, it has no reception potential
+            no_reception_potential[target_index] = true;
+            for(list<int>::const_iterator reception_neighbor_iterator = data_set->getReceptionNeighbors(target_index).begin(); reception_neighbor_iterator != data_set->getReceptionNeighbors(target_index).end(); reception_neighbor_iterator++){
+                int reception_neighbor_index = *reception_neighbor_iterator;
+                if(recepting_sensor_count[reception_neighbor_index]<reception_level){
+                    no_reception_potential[target_index] = false;
+                    break;
+                }
             }
-        }
 
-        // if the target has no reception potential, it is pushed back into the priority queue
-        // the fact that the target has no reception potential is taken into account by the comparison
-        // and the target should only reach the top of the queue when only such targets are left
-        if(no_reception_potential[target_index]){
-            adjacent_targets_without_sensors.push(target_index);
-            continue;
+            // if the target has no reception potential, it is pushed back into the priority queue
+            // the fact that the target has no reception potential is taken into account by the comparison
+            // and the target should only reach the top of the queue when only such targets are left
+            if(no_reception_potential[target_index]){
+                adjacent_targets_without_sensors.push(target_index);
+                continue;
+            }
         }
 
         solution->setTargetHasSensor(target_index, true);
