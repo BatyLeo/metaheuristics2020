@@ -165,7 +165,7 @@ void MainWindow::launchMetaheuristic(){
 
     MetaheuristicDialog* metaheuristic_dialog = new MetaheuristicDialog(this);
 
-    MetaheuristicThread* metaheuristic_thread = new MetaheuristicThread(10000, initial_solution, 0.5, 0.000000001, 0.9, this);
+    MetaheuristicThread* metaheuristic_thread = new MetaheuristicThread(1000, initial_solution, 0.8, 1e-10, 0.95, this);
 
     connect(metaheuristic_dialog, &MetaheuristicDialog::rejected, metaheuristic_thread, &MetaheuristicThread::stopMetaheuristic);
     connect(metaheuristic_thread, &MetaheuristicThread::addScoreAndTemperatureValues, metaheuristic_dialog, &MetaheuristicDialog::addValues);

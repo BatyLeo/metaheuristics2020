@@ -174,57 +174,70 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
                                                       function<bool ()> continue_function, function<void (int, float)> callback_function){
 
     const DataSet* data_set = initial_solution->getDataSet();
-    //int number_targets = data_set->getNumberTargets();
 
-    // computing initial and final temperatures
-    float T_0 = -1/log(initial_keep_probability);
-    float T_min = -1/log(final_keep_probability);
-
-    float T = T_0;
+    int number_deteriorating_changes = 1;
+    int total_score_deterioration = 1;
 
     vector<int> order_vector = solutionToOrderVector(initial_solution);
 
     Solution* best_solution = simpleHeuristic(data_set, order_vector);
     Solution* current_solution = new Solution(best_solution);
 
-    callback_function(best_solution->getScore(), T);
+    while(continue_function()){
 
-    while (T >= T_min && continue_function()) {
-        float sum_keep = 0;
-        float sum_bad_keep = 0;
-        for(int iteration=0; iteration<number_iterations; iteration++){
-            pair<int, int> switched_target_indices = randomTwoOptSwitch(order_vector);
+        // computing initial and final temperatures
+        float T_0 = -total_score_deterioration/(log(initial_keep_probability)*number_deteriorating_changes);
+        float T_min = -1/log(final_keep_probability);
 
-            Solution* test_solution = simpleHeuristic(data_set, order_vector);
+        float T = T_0;
 
-            int score_difference = test_solution->getScore() - current_solution->getScore();
-            float keep_probability = exp(-score_difference / T);
+        number_deteriorating_changes = 1;
+        total_score_deterioration = 1;
 
-            float random_value = rand() / (float)RAND_MAX;
-            if (random_value <= keep_probability){
-                delete current_solution;
-                current_solution = test_solution;
-                sum_keep += 1;
-                if (keep_probability < 1) {
-                    sum_bad_keep += 1;
+        callback_function(best_solution->getScore(), T);
+
+        while (T >= T_min && continue_function()) {
+            float sum_keep = 0;
+            float sum_bad_keep = 0;
+            for(int iteration=0; iteration<number_iterations; iteration++){
+                pair<int, int> switched_target_indices = randomTwoOptSwitch(order_vector);
+
+                Solution* test_solution = simpleHeuristic(data_set, order_vector);
+
+                int score_difference = test_solution->getScore() - current_solution->getScore();
+                float keep_probability = exp(-score_difference / T);
+
+                if(score_difference>0){
+                    total_score_deterioration += score_difference;
+                    number_deteriorating_changes++;
                 }
-            } else {
-                // switch back
-                twoOptSwitch(order_vector, switched_target_indices.first, switched_target_indices.second);
-                delete test_solution;
-            }
 
-            if(!continue_function()){
-                break;
-            }
+                float random_value = rand() / (float)RAND_MAX;
+                if (random_value <= keep_probability){
+                    delete current_solution;
+                    current_solution = test_solution;
+                    sum_keep += 1;
+                    if (keep_probability < 1) {
+                        sum_bad_keep += 1;
+                    }
+                } else {
+                    // switch back
+                    twoOptSwitch(order_vector, switched_target_indices.first, switched_target_indices.second);
+                    delete test_solution;
+                }
 
-            if(current_solution->getScore()<best_solution->getScore()){
-                delete best_solution;
-                best_solution = new Solution(current_solution);
+                if(!continue_function()){
+                    break;
+                }
+
+                if(current_solution->getScore()<best_solution->getScore()){
+                    delete best_solution;
+                    best_solution = new Solution(current_solution);
+                }
             }
+            callback_function(current_solution->getScore(), T);
+            T *= phi;
         }
-        callback_function(current_solution->getScore(), T);
-        T *= phi;
     }
 
     delete current_solution;
