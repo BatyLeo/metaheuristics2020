@@ -177,17 +177,17 @@ Afin d'améliorer les solutions obtenues à l'aide de l'heuristique \todo{nom de
   \item Paramètre multiplicateur de \textbf{décroissance de la température} : $\phi=0.95$
   \item \textbf{Nombre d'itérations} par palier de température : $\text{number\_iterations} = 10000$
   \item \textbf{Température initiale} : nous avons fixé un paramètre correspond à la probabilité initiale de garder une modification qui dégrade l'objectif à $\text{initial\_keep\_probability} = 0.8$. Puis en calculant une moyenne empirique de la valeur de dégradation d'une solution, on en déduit une valeur de la température initiale : \fbox{$T_0 = \dfrac{- \Delta_{mean}}{\log(\text{initial\_keep\_probability})}$}
-  \item \textbf{Température finale} : de manière similaire au calcul la température initiale on a choisi\\ $\text{final\_keep\_probability} = 1e-10$ qui correspond à la probabilité finale d'accepter une solution qui augmente l'objectif de $1$ catpeur. On obtient donc \fbox{$T_{final} = \dfrac{- 1}{\log(\text{initial\_keep\_probability})}$}
+  \item \textbf{Température finale} : de manière similaire au calcul la température initiale on a choisi\\ $\text{final\_keep\_probability} = 1e-10$ qui correspond à la probabilité finale d'accepter une solution qui augmente l'objectif de $1$ catpeur. On obtient donc \fbox{$T_{final} = \dfrac{- 1}{\log(\text{final\_keep\_probability})}$}
 \end{bulletlist}
 
 
 \begin{table}[]
-  \caption{Comparaison des résultatts du recuit simulé | aux bornes inférieures}
+  \caption{Comparaison entre : résultats du recuit simulé | bornes inférieures}
   \centering
   \label{tab:my-table}
   \begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
-  ($k$, $R_{capt}$, $R_{com}$) & \textbf{150-7-4} & \textbf{225-8-10} & \textbf{625-12-100} & \textbf{900-15-20} & \textbf{1500-15-100} & \textbf{1500-18-100} \\ \hline
+  $\bf{(k, R_{capt}, R_{com})}$ & \textbf{150-7-4} & \textbf{225-8-10} & \textbf{625-12-100} & \textbf{900-15-20} & \textbf{1500-15-100} & \textbf{1500-18-100} \\ \hline
   \textbf{(1, 1, 1)} & 31 | 21            & 45 | 26             & 89 | 54               & 137 | 82             & 138 | 80               & 198 | 113              \\ \hline
   \textbf{(1, 1, 2)} & 19 | 19            & 25 | 25             & 55 | 53               & 83 | 80              & 88 | 80                & 121 | 112              \\ \hline
   \textbf{(1, 2, 2)} & 8 | 6              & 11 | 8              & 24 | 16               & 37 | 23              & 37 | 23                & 55 | 32                \\ \hline
@@ -203,6 +203,10 @@ Afin d'améliorer les solutions obtenues à l'aide de l'heuristique \todo{nom de
   \end{tabular}
   \end{table}
 
+\todo[inline]{local search}
+
 \subsection{Recherche à voisinages multiples}
+
+\todo[inline]{explain + results}
 
 \end{document}
