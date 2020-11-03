@@ -3,10 +3,10 @@
 \contentsline {subsection}{\numberline {1.1}Notations}{2}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Modèle PLNE}{2}{subsection.1.2}%
 \contentsline {subsection}{\numberline {1.3}Relaxation linéaire et obtention des bornes inférieures}{3}{subsection.1.3}%
-\contentsline {section}{\numberline {2}Heuristiques}{4}{section.2}%
-\contentsline {subsection}{\numberline {2.1}heuristique 1}{4}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}heuristique 2}{5}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Métaheuristiques}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Structure de voisinage}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Recuit simulé}{5}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Recherche à voisinages multiples}{6}{subsection.3.3}%
+\contentsline {section}{\numberline {2}Heuristiques}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Heuristique par captations de coût minimal successives}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Heuristique gloutonne avec ordre sur les cibles}{4}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Structure de voisinage}{6}{section.3}%
+\contentsline {section}{\numberline {4}Métaheuristiques}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Recuit simulé}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Recherche à voisinages multiples}{7}{subsection.4.2}%
