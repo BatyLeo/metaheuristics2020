@@ -10,7 +10,7 @@ const instance_file_names = Array{String, 1}(["captANOR150_7_4", "captANOR225_8_
 const radius_array = Array{Tuple{Int64, Int64}, 1}([(1, 1), (1, 2), (2, 2), (2, 3)])
 const reception_levels_array = Array{Int, 1}([1, 2, 3])
 
-results_file = "recuit_solutions.txt"
+results_file = "better_solutions.txt"
 rm(results_file, force=true)
 
 open(results_file, "w") do io
@@ -24,7 +24,7 @@ open(results_file, "w") do io
                 # create a dataset from the instance
                 dataset = Dataset(communication_radius, reception_radius, reception_level, target_coordinates)
 
-                solution_path = "../../solutions/k_$(reception_level)/$(reception_radius)_$(communication_radius)/$(instance_file).txt"
+                solution_path = "../../better_solutions/k_$(reception_level)/$(reception_radius)_$(communication_radius)/$(instance_file).txt"
                 solution = parse_solution(solution_path, dataset)
 
                 # check admissibility

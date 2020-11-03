@@ -63,8 +63,8 @@ Voici tout d'abord les différentes notations qui seront utilisées dans la suit
 \noindent On décrit une solution à l'aide des variables de décision suivantes :
 \begin{bulletlist}
   \item $\forall t\in T,\, \delta_t = \1_{\{\text{capteur sur la cible } t\}}$
-  \item $\forall e\in E^{com},\, x_e = \1_{\{e \text{ dans l'arbre de communication}\}}$ (L'arbre de communication est un arbre couvrant toutes les cibles possédant un capteur dans le graphe de communication $G^{capt}$)
-  \item $\forall a\in \mathcal{D}(E^{com}),\, y_a\in \mathbb{R}_+$ : on définit un flot $\mathcal{D}(E^{com})$, qui part de $s$, de valeur égale au nombre de capteurs placés, et dont chaque cibles possédant un capteur réceptionne une unité de ce flot.
+  \item $\forall e\in E^{com},\, x_e = \1_{\{e \text{ dans l'arbre de communication}\}}$ (l'arbre de communication est un arbre couvrant toutes les cibles possédant un capteur dans le graphe de communication $G^{capt}$)
+  \item $\forall a\in \mathcal{D}(E^{com}),\, y_a\in \mathbb{R}_+$ : on définit un flot sur $\mathcal{D}(E^{com})$, qui part de $s$, de valeur égale au nombre de capteurs placés, et dont chaque cibles possédant un capteur réceptionne une unité.
 \end{bulletlist}
 
 \bigskip
@@ -103,7 +103,7 @@ Voici tout d'abord les différentes notations qui seront utilisées dans la suit
 
 \subsection{Relaxation linéaire et obtention des bornes inférieures}
 
-Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \textsc{JuMP} (librairie de programmation mathématique) couplé avec le solveur Gurobi (licence académique), afin de résoudre la relaxation linéaire de ce problème, voire la résolution exacte par Branch and Bound pour les plus petites instance. Nous obtenons exactement les mêmes bornes inférieures que celles fournies avec les instances.
+Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \textsc{JuMP} (librairie de programmation mathématique) couplée avec le solveur Gurobi (licence académique), afin de résoudre la relaxation linéaire de ce problème, voire la résolution exacte par Branch and Bound pour les plus petites instance. Nous obtenons exactement les mêmes bornes inférieures que celles fournies avec les instances, sauf pour les plus grosses instances pour lesquelles le temps de calcul était trop important pour pouvoir les calculer sur nos ordinateurs.
 
 \section{Heuristiques}
 
@@ -171,42 +171,66 @@ Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \tex
 
 \subsection{Recuit simulé}
 
-Afin d'améliorer les solutions obtenues à l'aide de l'heuristique \todo{nom de l'heuristique}, nous avons mis en oeuvre une métaheuristique de type recuit simulé comme vu en cours, en utilisant le voisinage défini par la seconde heuristique \todo{nom de la 2eme heuristique}. Nous avons utilisé les paramètres suivant :
+Afin d'améliorer les solutions obtenues à l'aide de l'heuristique \ref{Heuristique par captations de coût minimal successives}, nous avons mis en \oe uvre une métaheuristique de type recuit simulé comme vu en cours, en utilisant le voisinage défini par la seconde heuristique \ref{Heuristique gloutonne avec relation d'ordre sur les cibles}. Nous avons utilisé les paramètres suivant :
 
 \begin{bulletlist}
   \item Paramètre multiplicateur de \textbf{décroissance de la température} : $\phi=0.95$
   \item \textbf{Nombre d'itérations} par palier de température : $\text{number\_iterations} = 10000$
-  \item \textbf{Température initiale} : nous avons fixé un paramètre correspond à la probabilité initiale de garder une modification qui dégrade l'objectif à $\text{initial\_keep\_probability} = 0.8$. Puis en calculant une moyenne empirique de la valeur de dégradation d'une solution, on en déduit une valeur de la température initiale : \fbox{$T_0 = \dfrac{- \Delta_{mean}}{\log(\text{initial\_keep\_probability})}$}
-  \item \textbf{Température finale} : de manière similaire au calcul la température initiale on a choisi\\ $\text{final\_keep\_probability} = 1e-10$ qui correspond à la probabilité finale d'accepter une solution qui augmente l'objectif de $1$ catpeur. On obtient donc \fbox{$T_{final} = \dfrac{- 1}{\log(\text{final\_keep\_probability})}$}
+  \item \textbf{Température initiale} : nous avons fixé un paramètre correspond à la probabilité initiale de garder une modification qui dégrade l'objectif à $\text{initial\_keep\_probability} = 0.8$. Puis en calculant une moyenne empirique de la valeur de dégradation d'une solution, on en déduit une valeur de la température initiale : \fbox{$T_0 = \dfrac{- \Delta_{mean}}{\ln(\text{initial\_keep\_probability})}$}
+  \item \textbf{Température finale} : de manière similaire au calcul la température initiale on a choisi\\ $\text{final\_keep\_probability} = 1e-10$ qui correspond à la probabilité finale d'accepter une solution qui augmente l'objectif de $1$. On obtient donc \fbox{$T_{final} = \dfrac{- 1}{\ln(\text{final\_keep\_probability})}$}
 \end{bulletlist}
 
+En sortie du recuit, on applique en plus une recherche locale. Voici les résultats finaux obtenus, et leur comparaison avec les bornes inférieures :
 
-\begin{table}[]
+\begin{table}[H]
   \caption{Comparaison entre : résultats du recuit simulé | bornes inférieures}
   \centering
   \label{tab:my-table}
   \begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
-  $\bf{(k, R_{capt}, R_{com})}$ & \textbf{150-7-4} & \textbf{225-8-10} & \textbf{625-12-100} & \textbf{900-15-20} & \textbf{1500-15-100} & \textbf{1500-18-100} \\ \hline
+  $\bf{(k, R^{capt}, R^{com})}$ & \textbf{150-7-4} & \textbf{225-8-10} & \textbf{625-12-100} & \textbf{900-15-20} & \textbf{1500-15-100} & \textbf{1500-18-100} \\ \hline
   \textbf{(1, 1, 1)} & 31 | 21            & 45 | 26             & 89 | 54               & 137 | 82             & 138 | 80               & 198 | 113              \\ \hline
   \textbf{(1, 1, 2)} & 19 | 19            & 25 | 25             & 55 | 53               & 83 | 80              & 88 | 80                & 121 | 112              \\ \hline
   \textbf{(1, 2, 2)} & 8 | 6              & 11 | 8              & 24 | 16               & 37 | 23              & 37 | 23                & 55 | 32                \\ \hline
-  \textbf{(1, 3, 3)} & 6 | 6              & 8 | 8               & 18 | 16               & 27 | 22              & 28 | 23                & 39 | 31                \\ \hline
+  \textbf{(1, 2, 3)} & 6 | 6              & 8 | 8               & 18 | 16               & 27 | 22              & 28 | 23                & 39 | 31                \\ \hline
   \textbf{(2, 1, 1)} & 44 | 40            & 56 | 50             & 119 | 106             & 185 | 162            & 189 | 159              & 261 | 225              \\ \hline
-  \textbf{(2, 1, 2)} & 39 | 39            & 50 |50              & 109 | 106             & 166 | 161            & 174 159                & 239 | 225              \\ \hline
+  \textbf{(2, 1, 2)} & 39 | 39            & 50 |50              & 109 | 106             & 166 | 161            & 174 | 159              & 239 | 225              \\ \hline
   \textbf{(2, 2, 2)} & 12 | 11            & 16 | 15             & 34 | 31               & 52 | 44              & 53 | 45                & 73 | 62                \\ \hline
-  \textbf{(2, 3, 3)} & 11 | 11            & 16 | 15             & 32 | 31               & 49 | 44              & 52 | 45                & 69 | 62                \\ \hline
+  \textbf{(2, 2, 3)} & 11 | 11            & 16 | 15             & 32 | 31               & 49 | 44              & 52 | 45                & 69 | 62                \\ \hline
   \textbf{(3, 1, 1)} & 62 | 60            & 79 | 78             & 166 | 162             & 253 | 246            & 260 | 239              & 355 | 341              \\ \hline
   \textbf{(3, 1, 2)} & 60 | 60            & 78 | 78             & 166 | 162             & 251 | 245            & 257 | 239              & 355 | 341              \\ \hline
   \textbf{(3, 2, 2)} & 17 | 17            & 23 | 23             & 49 | 46               & 74 | 66              & 75 | 67                & 103 | 93               \\ \hline
-  \textbf{(3, 3, 3)} & 17 | 17            & 23 | 23             & 48 | 46               & 72 | 66              & 75 | 67                & 105 | 93               \\ \hline
+  \textbf{(3, 2, 3)} & 17 | 17            & 23 | 23             & 48 | 46               & 72 | 66              & 75 | 67                & 105 | 93               \\ \hline
   \end{tabular}
-  \end{table}
+\end{table}
 
-\todo[inline]{local search}
+Remarque : pour l'instance \texttt{1500-18-100}, on obtient une solution à $103$ pour le jeu de paramètres $(3, 2, 2)$ et $105$ pour le jeu de paramètres $(3, 2, 3)$. Toute solution de $(3, 2, 2)$ étant admissible pour $(3, 2, 3)$, on a donc aussi une solution à $103$ pour $(3, 2, 3)$.
 
 \subsection{Recherche à voisinages multiples}
 
-\todo[inline]{explain + results}
+Afin d'affiner et d'améliorer de manière très légère les résultats du recuit simulé, nous avons implémenté une recherche à voisinages multiples, qui part des solutions du recuit, et qui alterne entre des 2-opt, 3-opt, et 4-opt, cela pendant $500000$ itérations. On a observé une amélioration des solutions qui varie entre $0$ et $5$. Voici une table résumant les résultats obtenus, avec en couleur les jeux de paramètres/instances pour lesquels on a amélioré la solution d'au moins $1$.
+\todo{expliciter l'algo ?}
+
+\begin{table}[H]
+  \caption{Comparaison entre : résultats finaux | bornes inférieures}
+  \centering
+  \label{tab:my-table}
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+  \hline
+  $\bf{(k, R^{capt}, R^{com})}$ & \textbf{150-7-4}                                       & \textbf{225-8-10}               & \textbf{625-12-100}               & \textbf{900-15-20}                & \textbf{1500-15-100}              & \textbf{1500-18-100}              \\ \hline
+  \textbf{(1, 1, 1)}            & 31 | 21                                                & 45 | 26                         & \cellcolor[HTML]{F8A102}88 | 54   & 137 | 82                          & \cellcolor[HTML]{F8A102}137 | 80  & \cellcolor[HTML]{F56B00}196 | 113 \\ \hline
+  \textbf{(1, 1, 2)}            & 19 | 19                                                & 25 | 25                         & 55 | 53                           & \cellcolor[HTML]{F8A102}82 | 80   & \cellcolor[HTML]{F8A102}87 | 80   & 121 | 112                         \\ \hline
+  \textbf{(1, 2, 2)}            & 8 | 6                                                  & 11 | 8                          & 24 | 16                           & \cellcolor[HTML]{F8A102}36 | 23   & \cellcolor[HTML]{F8A102}36 | 23   & \cellcolor[HTML]{F56B00}53 | 32   \\ \hline
+  \textbf{(1, 2, 3)}            & 6 | 6                                                  & 8 | 8                           & 18 | 16                           & \cellcolor[HTML]{F8A102}26 | 22   & \cellcolor[HTML]{F8A102}27 | 23   & \cellcolor[HTML]{F8A102}38 | 31   \\ \hline
+  \textbf{(2, 1, 1)}            & 44 | 40                                                & 56 | 50                         & \cellcolor[HTML]{F56B00}117 | 106 & \cellcolor[HTML]{F56B00}183 | 162 & \cellcolor[HTML]{9A0000}184 | 159 & \cellcolor[HTML]{F56B00}259 | 225 \\ \hline
+  \textbf{(2, 1, 2)}            & 39 | 39                                                & 50 |50                          & 109 | 106                         & \cellcolor[HTML]{F8A102}165 | 161 & \cellcolor[HTML]{CB0000}170 | 159 & \cellcolor[HTML]{F56B00}237 | 225 \\ \hline
+  \textbf{(2, 2, 2)}            & 12 | 11                                                & 16 | 15                         & 34 | 31                           & \cellcolor[HTML]{F8A102}50 | 44   & 53 | 45                           & \cellcolor[HTML]{F56B00}71 | 62   \\ \hline
+  \textbf{(2, 2, 3)}            & 11 | 11                                                & \cellcolor[HTML]{F8A102}15 | 15 & 32 | 31                           & \cellcolor[HTML]{F8A102}48 | 44   & \cellcolor[HTML]{F56B00}50 | 45   & 69 | 62                           \\ \hline
+  \textbf{(3, 1, 1)}            & \cellcolor[HTML]{F8A102}{\color[HTML]{333333} 61 | 60} & 79 | 78                         & \cellcolor[HTML]{F8A102}165 | 162 & 253 | 246                         & \cellcolor[HTML]{9A0000}255 | 239 & \cellcolor[HTML]{F8A102}354 | 341 \\ \hline
+  \textbf{(3, 1, 2)}            & 60 | 60                                                & 78 | 78                         & 166 | 162                         & \cellcolor[HTML]{F56B00}249 | 245 & \cellcolor[HTML]{CB0000}253 | 239 & \cellcolor[HTML]{FE0000}352 | 341 \\ \hline
+  \textbf{(3, 2, 2)}            & 17 | 17                                                & 23 | 23                         & 49 | 46                           & \cellcolor[HTML]{F8A102}73 | 66   & 75 | 67                           & \cellcolor[HTML]{F8A102}102 | 93  \\ \hline
+  \textbf{(3, 2, 3)}            & 17 | 17                                                & 23 | 23                         & 48 | 46                           & 72 | 66                           & \cellcolor[HTML]{F8A102}74 | 67   & \cellcolor[HTML]{F8A102}102 | 93  \\ \hline
+  \end{tabular}
+  \end{table}
 
 \end{document}
