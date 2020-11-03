@@ -107,7 +107,11 @@ Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \tex
 
 \section{Heuristiques}
 
-\subsection{heuristique 1}
+\subsection{Heuristique par captations de coût minimal successives}
+
+Cette première heuristique a été utilisée au cours du projet pour générer les solutions de départ des métaheuristiques.
+Cet algorithme construit de façon déterministe une solution admissible à partir d'une "graine" qui peut être générée aléatoirement.
+Les solutions données par cette heuristique se sont révélées être d'une qualité satisfaisante, au prix d'un coût en calcul plus élevé que d'autres méthodes de construction plus naturelles.
 
 \begin{algorithm}[H]
   \caption{Heuristique par captations de coût minimal successives}
@@ -129,15 +133,38 @@ Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \tex
   \end{algorithmic}
 \end{algorithm}
 
-\subsection{heuristique 2}
+\bigskip
+
+L'idée de l'algorithme est fondée sur le fait que, dans toute solution admissible, toute cible a dans $G^{capt}$ au moins $k$ voisins distincs qui portent un capteur.\\
+La liste $L$ fournie en entrée sert de "graine", elle contient $k$ fois l'indice de chaque cible.
+À chaque itération de la boucle principale de l'algorithme, il va être fait en sorte que la cible $t$ corresponant à l'indice dans $L$ ait au moins un capteur parmi ses voisins dans $G^{capt}$.
+Pour cela, des capteurs supplémentaires vont être placés de façon à relier dans $G^{com}$ un voisin de la cible à l'ensemble formé par le puits et les capteurs déjà présents.
+Le nombre de capteur ajoutés à chaque itération est minimisé en choisissant un voisin de la cible au plus près d'un capteur déjà placé ou du puits et en plaçant les capteurs additionnels sur un plus court chemin vers cet ensemble.
+Afin que le voisin choisi ne soit pas réutilisé pour la même cible lors d'une prochaine itération, l'arète les reliant est retirée de $G^{capt}$.\\
+Il convient de remarquer qu'au terme de chaque itération, l'ensemble formé par le puits et les capteurs est connexe dans $G^{com}$.
+À la fin de l'algorithme, il est donc assuré que chaque cible a au moins $k$ capteurs parmi ses voisins dans le graphe $G^{capt}$ de l'instance et que ces capteurs sont reliés au puits dans $G^{com}$.
+
+\bigskip
+
+Une implémentation naturelle de cette heuristique consiste à recalculer à chaque itération les plus courts chemins depuis le puits dans le graphe $G^{com}$ muni de poids binaires choisis.
+Cela revient à appliquer $k|T|$ fois l'algorithme de Dijkstra, soit une complexité en $O(k|T|^3)$.\\
+Cependant, au prix du précalcul en $O(|T|^3)$ des plus courts chemins entre toute paire de cibles ainsi que des plus courts chemins vers le puits dans $G^{com}$ muni de poids unitaires, cette complexité peut être réduite à $O(k|T|^2)$.
+
+
+\subsection{Heuristique gloutonne avec ordre sur les cibles}
+
+Cette seconde heuristique suit un principe plus simple et est plus rapide que la précédente.
+Elle construit une solution admissible de façon déterministe à partir d'un ordre sur les cibles.
+Contrairement à l'heuristique par captations de coût minimal successives qui fournit généralement des solutions de bonne qualité en tirant aléatoirement des "graines", cet algorithme donne globalement de très mauvais résultats lorsqu'il génère des solutions à partir d'ordres aléatoires.\\
+En contrepartie, l'ensemble des solutions admissibles atteignables est a priori plus vaste que pour la première heuristique qui se contraint à placer des capteurs sur des plus courts chemins.
 
 \begin{algorithm}[H]
-  \caption{Heuristique gloutonne avec relation d'ordre sur les cibles}
-  \label{Heuristique gloutonne avec relation d'ordre sur les cibles}
+  \caption{Heuristique gloutonne avec ordre sur les cibles}
+  \label{Heuristique gloutonne avec ordre sur les cibles}
   \begin{algorithmic}
       \STATE \textbf{Input:}
       \STATE $(T, G^{capt}, G^{com},k)$ : une instance du problème
-      \STATE $\prec$ : une relation d'ordre sur les cibles
+      \STATE $\prec$ : une relation définissant un ordre sur les cibles
       \STATE
       \STATE \textbf{Output:} $N \subset T$ : le sous-ensemble de cibles sur lesquelles placer des capteurs
       \STATE
@@ -164,6 +191,30 @@ Nous avons implémenté le PLNE en \textsc{Julia} en utilisant la librairie \tex
       \STATE Renvoyer $N$
   \end{algorithmic}
 \end{algorithm}
+
+\bigskip
+
+L'idée de l'algorithme est de construire un réseau connexe dans $G^{com}$ en plaçant des capteurs de proche en proche à partir du puits.
+À chaque itération, les cibles candidates pour recevoir un nouveau capteur sont celles situées dans le voisinage du puits ou des capteurs déjà placés dans $G^{com}$.
+La cible choisie pour placer le nouveau capteur est celle la mieux classée dans l'ordre donné en entrée.
+Néanmoins, pour éviter de placer des capteurs "inutiles", si la cible choisie a tous ses voisins dans $G^{capt}$ déjà couverts par au moins $k$ capteurs, elle est mise "en attente" et ne sera reconsidérée que s'il n'y a plus aucune cible "utile" parmi les candidates.\\
+L'algorithme s'arrête lorsque toutes les cibles sont couvertes par au moins $k$ capteurs.
+Le réseau des capteurs placés étant connexe dans $G^{com}$ par construction, la solution obtenue est bien admissible.
+
+\bigskip
+
+En utilisant des structures de données adaptées pour tenir le compte du nombre de capteurs couvrant chaque cible, cet algorithme peut être implémenté avec une complexité en $O(|T|^2)$.
+
+
+
+\section{Structure de voisinage}
+
+Étant donné que nous dispositions d'une heuristique rapide et capable d'explorer l'espace des solutions admissibles en jouant sur le paramètre d'ordre donné en entrée, nous avons choisi de la mettre à profit pour élaborer une structure de voisinage.\\
+Nous avons donc opté pour un voisinage qui pourrait être qualifié d'indirect en travaillant non pas sur les solutions elles-mêmes mais sur des vecteurs définissant des ordres sur les cibles.
+En procédant de la sorte, nous avons pu nous ramener à des transformations élémentaires très simples consistant à permuter les composantes des vecteurs.
+Ces permutations ont l'avantage de pouvoir être effectuées sans se soucier des contraintes du problème initial puisque tout vecteur d'ordre mène à une solution admissible par l'intermédiaire de l'heuristique gloutonne.
+
+
 
 \section{Métaheuristiques}
 

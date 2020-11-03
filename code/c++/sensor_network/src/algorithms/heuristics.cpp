@@ -159,20 +159,19 @@ Solution* simpleHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
             }
 
         }
-
     }
 
     return solution;
 }
 
-Solution* hybridHeuristic(const DataSet* data_set, const vector<int>& seed_vector){
+Solution* hybridHeuristic(const DataSet* data_set, const vector<int>& order_vector){
     Solution* solution = new Solution(data_set);
 
     int number_targets = data_set->getNumberTargets();
     int reception_level = data_set->getReceptionLevel();
 
-    if(!(seed_vector.size() == number_targets)){
-        throw "invalid argument in simpleHeuristic";
+    if(!(order_vector.size() == number_targets)){
+        throw "invalid argument in hybridHeuristic";
     }
 
     int number_targets_with_enpugh_reception = 0;
@@ -181,70 +180,58 @@ Solution* hybridHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
     }
     vector<int> recepting_sensor_count(number_targets, 0);
 
-    list<int> border;
-    vector<list<int>::iterator > border_iterators(number_targets, border.end());
-    for(list<int>::const_iterator source_communication_neighbor_iterator = data_set->getSourceCommunicationNeighbors().begin(); source_communication_neighbor_iterator != data_set->getSourceCommunicationNeighbors().end(); source_communication_neighbor_iterator++){
-        int source_communication_neighbor_index = *source_communication_neighbor_iterator;
-        border.push_front(source_communication_neighbor_index);
-        border_iterators[source_communication_neighbor_index] = border.begin();
+    vector<int> shortest_path_to_communication_network(number_targets, -1);
+    vector<int> closest_target_in_communication_network(number_targets, -1);
+    for(int target_index = 0; target_index<number_targets; target_index++){
+        shortest_path_to_communication_network[target_index] = data_set->getShortestPathToSource(target_index);
     }
 
     int step = 0;
     while(number_targets_with_enpugh_reception<number_targets && step<number_targets){
-        int target_index = seed_vector[step];
+        int target_index = order_vector[step];
         step++;
 
-        // if the current target already has a sensor, there is nothing to do
         if(solution->getTargetHasSensor(target_index)){
             continue;
         }
 
-        // initializing vectors that will be used to find the shortest path between the current target and the border
-        vector<int> distance_to_target = vector<int>(number_targets, -1);
-        vector<int> next_target_in_shortest_path_to_target = vector<int>(number_targets, -1);
-
-        auto compare = [&distance_to_target](int target_index_1, int target_index_2) { return distance_to_target[target_index_1] > distance_to_target[target_index_2]; };
-        std::priority_queue<int, std::vector<int>, decltype(compare)> targets_to_explore(compare);
-
-        distance_to_target[target_index] = 0;
-        targets_to_explore.push(target_index);
-
-        // completing the computation of the distances to source
-        int closest_border_target_index = -1;
-        bool border_target_found = false;
-        while((!border_target_found)&&(!targets_to_explore.empty())){
-            int explored_target_index = targets_to_explore.top();
-            targets_to_explore.pop();
-
-            if(border_iterators[explored_target_index] != border.end()){
-                border_target_found = true;
-                closest_border_target_index = explored_target_index;
+        // checking that the current target has reception potential
+        bool no_reception_potential = true;
+        for(list<int>::const_iterator reception_neighbor_iterator = data_set->getReceptionNeighbors(target_index).begin(); reception_neighbor_iterator != data_set->getReceptionNeighbors(target_index).end(); reception_neighbor_iterator++){
+            int reception_neighbor_index = *reception_neighbor_iterator;
+            if(recepting_sensor_count[reception_neighbor_index]<reception_level){
+                no_reception_potential = false;
                 break;
             }
+        }
 
-            for(list<int>::const_iterator communication_neighbor_iterator = data_set->getCommunicationNeighbors(explored_target_index).begin(); communication_neighbor_iterator != data_set->getCommunicationNeighbors(explored_target_index).end(); communication_neighbor_iterator++){
-                int communication_neighbor_index = *communication_neighbor_iterator;
-                // if the communication neighbor has not been explored yet (distance -1), its distance is set and it is added to the targets to explore
-                if(distance_to_target[communication_neighbor_index] == -1){
-                    distance_to_target[communication_neighbor_index] = distance_to_target[explored_target_index] + 1;
-                    targets_to_explore.push(communication_neighbor_index);
-                    next_target_in_shortest_path_to_target[communication_neighbor_index] = explored_target_index;
+        // if the target has no reception potential, no sensor should be placed on it and the iteration ends
+        if(no_reception_potential){
+            continue;
+        }
+
+
+        // placing sensors on targets belonging to the closest path between current target and current communication network.
+        int target_on_path_index = target_index;
+        int closest_target_with_sensor = closest_target_in_communication_network[target_on_path_index];
+        while(target_on_path_index != closest_target_with_sensor){
+            if(target_on_path_index == -1){
+                throw "source reached while placing missing sensors on path";
+            }
+
+            // putting sensor on the target on path
+            solution->setTargetHasSensor(target_on_path_index, true);
+
+            // updating distances to communication network
+            for(int other_target_index = 0; other_target_index<number_targets; other_target_index++){
+                if(data_set->getShortestPath(other_target_index, target_on_path_index)<shortest_path_to_communication_network[other_target_index]){
+                    shortest_path_to_communication_network[other_target_index] = data_set->getShortestPath(other_target_index, target_on_path_index);
+                    closest_target_in_communication_network[other_target_index] = target_on_path_index;
                 }
             }
-        }
 
-        if(!border_target_found){
-            throw "Unable to connect target to source in hybridHeuristic";
-        }
-
-        // placing sensors on targets belonging to the closest path between current target and border.
-        int target_with_new_sensor_index = closest_border_target_index;
-        while(target_with_new_sensor_index!=-1){
-            // placing sensor
-            solution->setTargetHasSensor(target_with_new_sensor_index, true);
-
-            // updating reception of reception neighbors
-            for(list<int>::const_iterator reception_neighbor_iterator = data_set->getCommunicationNeighbors(target_with_new_sensor_index).begin(); reception_neighbor_iterator != data_set->getCommunicationNeighbors(target_with_new_sensor_index).end(); reception_neighbor_iterator++){
+            // updating recepting sensors count
+            for(list<int>::const_iterator reception_neighbor_iterator = data_set->getReceptionNeighbors(target_on_path_index).begin(); reception_neighbor_iterator != data_set->getReceptionNeighbors(target_on_path_index).end(); reception_neighbor_iterator++){
                 int reception_neighbor_index = *reception_neighbor_iterator;
                 recepting_sensor_count[reception_neighbor_index]++;
                 if(recepting_sensor_count[reception_neighbor_index] == reception_level){
@@ -252,20 +239,14 @@ Solution* hybridHeuristic(const DataSet* data_set, const vector<int>& seed_vecto
                 }
             }
 
-            // removing target with new sensor from border
-            border.erase(border_iterators[target_with_new_sensor_index]);
-            border_iterators[target_with_new_sensor_index] = border.end();
-
-            // adding communication neighbors that are neither in the border nor have a sensor to the border
-            for(list<int>::const_iterator communication_neighbor_iterator = data_set->getCommunicationNeighbors(target_with_new_sensor_index).begin(); communication_neighbor_iterator != data_set->getCommunicationNeighbors(target_with_new_sensor_index).end(); communication_neighbor_iterator++){
-                int communication_neighbor_index = *communication_neighbor_iterator;
-                if((!solution->getTargetHasSensor(communication_neighbor_index))&&(border_iterators[communication_neighbor_index] == border.end())){
-                    border.push_front(communication_neighbor_index);
-                    border_iterators[communication_neighbor_index] = border.begin();
-                }
+            if(closest_target_with_sensor == -1){
+                // in the particular case where the source is considered to be the closest target with sensor
+                // the next target on path is the next target on path to source
+                target_on_path_index = data_set->getNextTargetOnShortestPathToSource(target_on_path_index);
+            } else{
+                target_on_path_index = data_set->getNextTargetOnShortestPath(closest_target_with_sensor, target_on_path_index);
             }
 
-            target_with_new_sensor_index = next_target_in_shortest_path_to_target[target_with_new_sensor_index];
         }
 
     }

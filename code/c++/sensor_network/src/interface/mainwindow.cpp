@@ -32,6 +32,7 @@ MainWindow::MainWindow(){
     connect(sidebar, &Sidebar::selectedSolutionChanged, this, &MainWindow::handleSelectedSolutionChanged);
     connect(sidebar, &Sidebar::computeHeuristicSolution, this, &MainWindow::computeHeuristicSolution);
     connect(sidebar, &Sidebar::launchMetaheuristic, this, &MainWindow::launchMetaheuristic);
+    connect(parameters_model, &ParametersModel::parametersChanged, solution_model, &SolutionModel::handleParametersChanged);
 }
 
 MainWindow::~MainWindow(){
@@ -165,11 +166,10 @@ void MainWindow::launchMetaheuristic(){
 
     MetaheuristicDialog* metaheuristic_dialog = new MetaheuristicDialog(this);
 
-    MetaheuristicThread* metaheuristic_thread = new MetaheuristicThread(1000, initial_solution, 0.8, 1e-10, 0.95, this);
+    MetaheuristicThread* metaheuristic_thread = new MetaheuristicThread(10000, initial_solution, 0.8, 1e-10, 0.95, this);
 
     connect(metaheuristic_dialog, &MetaheuristicDialog::rejected, metaheuristic_thread, &MetaheuristicThread::stopMetaheuristic);
     connect(metaheuristic_thread, &MetaheuristicThread::addScoreAndTemperatureValues, metaheuristic_dialog, &MetaheuristicDialog::addValues);
-    //connect(metaheuristic_thread, &MetaheuristicThread::finished, metaheuristic_dialog, &MetaheuristicDialog::accept);
     connect(metaheuristic_thread, &MetaheuristicThread::finished, metaheuristic_thread, &MetaheuristicThread::deleteLater);
     connect(metaheuristic_thread, &MetaheuristicThread::addMetaheuristicSolution, this, &MainWindow::addSolution);
 

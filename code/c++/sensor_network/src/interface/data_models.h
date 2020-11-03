@@ -7,6 +7,8 @@
 
 class TargetsTableModel : public QAbstractTableModel
 {
+    Q_OBJECT
+
 public:
     TargetsTableModel(DataSet *data_set, QObject *parent =nullptr);
 
@@ -23,6 +25,8 @@ private:
 
 class ParametersModel : public QAbstractTableModel
 {
+    Q_OBJECT
+
 public:
     ParametersModel(DataSet *data_set, QObject *parent =nullptr);
 
@@ -38,6 +42,9 @@ public:
 
 private:
     DataSet *data_set;
+
+signals:
+    void parametersChanged();
 };
 
 class SolutionsTableModel : public QAbstractTableModel
@@ -65,6 +72,8 @@ private:
 
 class SolutionModel : public QAbstractTableModel
 {
+    Q_OBJECT
+
 public:
     SolutionModel(Solution *solution, QObject *parent =nullptr);
 
@@ -76,6 +85,8 @@ public:
     const Solution* getSolution() const;
 
     void setSolution(Solution* new_solution);
+
+    void handleParametersChanged();
 
 private:
     Solution *solution;

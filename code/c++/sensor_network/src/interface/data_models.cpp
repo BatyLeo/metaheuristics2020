@@ -137,26 +137,25 @@ bool ParametersModel::setData(const QModelIndex &index, const QVariant &value, i
         return false;
     }
     Q_UNUSED(index)
-    /*if(index.isValid()){
+    if(index.isValid()){
         int row = index.row();
-        bool data_changed = false;
-        switch(column){
+        switch(row){
         case 0:
-           data_changed = parameters_set->setTaskLengthening(task, max(0., value.toDouble()));
-            if(data_changed){
-                emit dataChanged(index,index, {Qt::DisplayRole, Qt::EditRole});
-            }
-            return data_changed;
+            data_set->setCommunicationRadius(value.toFloat());
+            emit dataChanged(index,index, {Qt::DisplayRole, Qt::EditRole});
+            return true;
         case 1:
-            data_changed = parameters_set->setTaskAnchoringWeight(task, max(0, value.toInt()));
-            if(data_changed){
-                emit dataChanged(index,index, {Qt::DisplayRole, Qt::EditRole});
-            }
-            return data_changed;
+            data_set->setReceptionRadius(value.toFloat());
+            emit dataChanged(index,index, {Qt::DisplayRole, Qt::EditRole});
+            return true;
+        case 2:
+            data_set->setReceptionLevel(value.toInt());
+            emit dataChanged(index,index, {Qt::DisplayRole, Qt::EditRole});
+            return true;
         default:
             return false;
         }
-    }*/
+    }
     return false;
 }
 
@@ -314,5 +313,9 @@ void SolutionModel::setSolution(Solution* new_solution){
     beginResetModel();
     solution = new_solution;
     endResetModel();
+}
+
+void SolutionModel::handleParametersChanged(){
+    emit dataChanged(QModelIndex(), QModelIndex());
 }
 

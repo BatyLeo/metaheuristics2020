@@ -194,7 +194,7 @@ Solution* simulatedAnnealingMetaheuristicForInterface(int number_iterations, con
         number_deteriorating_changes = 1;
         total_score_deterioration = 1;
 
-        callback_function(best_solution->getScore(), T);
+        callback_function(current_solution->getScore(), T);
 
         while (T >= T_min && continue_function()) {
             float sum_keep = 0;
