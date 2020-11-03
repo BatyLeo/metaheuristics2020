@@ -1,5 +1,5 @@
 
-Gurobi 9.0.3 (mac64) logging started Fri Oct 30 18:45:07 2020
+Gurobi 9.0.3 (mac64) logging started Sun Nov  1 12:38:56 2020
 
 Gurobi Optimizer version 9.0.3 build v9.0.3rc0 (mac64)
 Optimize a model with 227199 rows, 169648 columns and 764416 nonzeros
@@ -9,49 +9,50 @@ Coefficient statistics:
   Objective range  [1e+00, 1e+00]
   Bounds range     [1e+00, 1e+00]
   RHS range        [1e+00, 1e+00]
+
+Concurrent LP optimizer: dual simplex and barrier
+Showing barrier log only...
+
 Presolve removed 83 rows and 1 columns
-Presolve time: 2.48s
+Presolve time: 3.74s
 Presolved: 227116 rows, 169647 columns, 763113 nonzeros
 
-Iteration    Objective       Primal Inf.    Dual Inf.      Time
-       0    0.0000000e+00   1.443000e+03   0.000000e+00      3s
-    1740    6.8500784e+01   5.234115e+05   0.000000e+00      5s
-    3814    6.9501984e+01   8.046328e+03   0.000000e+00     10s
-    5720    7.1116130e+01   4.529622e+03   0.000000e+00     15s
-    7316    7.2411247e+01   3.803095e+03   0.000000e+00     20s
-    8976    7.4214718e+01   2.604957e+03   0.000000e+00     25s
-   10350    7.6867142e+01   1.140556e+05   0.000000e+00     31s
-   11651    7.7540453e+01   3.305538e+05   0.000000e+00     35s
-   12899    7.8220671e+01   7.307474e+04   0.000000e+00     41s
-   13799    7.8308646e+01   3.215671e+04   0.000000e+00     45s
-   14959    7.8452652e+01   2.071843e+04   0.000000e+00     51s
-   15519    7.8494353e+01   2.796098e+06   0.000000e+00     55s
-   16637    7.8687015e+01   6.444982e+05   0.000000e+00     60s
-   17883    7.8853507e+01   1.029176e+05   0.000000e+00     65s
-   19757    7.9012327e+01   2.821435e+04   0.000000e+00     71s
-   20267    7.9014576e+01   6.214646e+03   0.000000e+00     75s
-   21255    7.9038025e+01   1.962266e+04   0.000000e+00     81s
-   22219    7.9059780e+01   1.022685e+04   0.000000e+00     86s
-   22639    7.9060695e+01   7.639919e+03   0.000000e+00     90s
-   23765    7.9063538e+01   1.962557e+04   0.000000e+00     96s
-   24445    7.9065292e+01   5.325997e+03   0.000000e+00    101s
-   25969    7.9077488e+01   5.540543e+03   0.000000e+00    105s
-   27498    7.9077769e+01   6.898455e+03   0.000000e+00    110s
-   28338    7.9077815e+01   4.801574e+03   0.000000e+00    116s
-   29368    7.9078409e+01   1.669905e+02   0.000000e+00    121s
-   30228    7.9078593e+01   3.202974e+02   0.000000e+00    125s
-   31268    7.9078655e+01   3.794884e+02   0.000000e+00    130s
-   32522    7.9078707e+01   1.406735e+02   0.000000e+00    135s
-   33242    7.9078725e+01   2.944924e+02   0.000000e+00    140s
-   33722    7.9078741e+01   7.605408e+01   0.000000e+00    147s
-   34432    7.9078757e+01   7.220069e+01   0.000000e+00    151s
-   35694    7.9078782e+01   9.413995e+00   0.000000e+00    155s
-   36906    7.9078793e+01   3.360484e+00   0.000000e+00    160s
-   37920    7.9078799e+01   9.824880e-03   0.000000e+00    165s
-   38909    7.9056658e+01   0.000000e+00   1.328916e+00    171s
-   39539    7.9056656e+01   0.000000e+00   1.201155e+00    175s
-   40439    7.9056649e+01   0.000000e+00   4.027306e-02    181s
-   40574    7.9056649e+01   0.000000e+00   0.000000e+00    182s
+Elapsed ordering time = 5s
+Elapsed ordering time = 10s
+Elapsed ordering time = 15s
+Elapsed ordering time = 20s
+Elapsed ordering time = 25s
+Elapsed ordering time = 27s
+Elapsed ordering time = 30s
+Elapsed ordering time = 35s
+Elapsed ordering time = 40s
+Elapsed ordering time = 45s
+Elapsed ordering time = 50s
+Elapsed ordering time = 55s
+Elapsed ordering time = 60s
+Elapsed ordering time = 65s
+Elapsed ordering time = 70s
+Elapsed ordering time = 72s
+Elapsed ordering time = 75s
+Elapsed ordering time = 80s
+Elapsed ordering time = 85s
+Ordering time: 86.13s
 
-Solved in 40574 iterations and 181.65 seconds
+Barrier statistics:
+ AA' NZ     : 7.770e+06
+ Factor NZ  : 1.547e+08 (roughly 1.4 GBytes of memory)
+ Factor Ops : 4.404e+11 (roughly 18 seconds per iteration)
+ Threads    : 1
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0   5.94319725e+05 -1.09256258e+06  5.86e+05 4.16e-02  1.23e+02   136s
+   1   3.26600890e+05 -2.27284875e+06  2.05e+05 8.34e-02  4.82e+01   184s
+
+Barrier performed 1 iterations in 199.62 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+
+Solved with dual simplex
+Solved in 40574 iterations and 199.94 seconds
 Optimal objective  7.905664943e+01

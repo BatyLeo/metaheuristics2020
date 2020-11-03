@@ -23,4 +23,6 @@ void my_main_4();
 
 void my_main_5();
 
+void my_main_6();
+
 #endif // SCRIPTS_H

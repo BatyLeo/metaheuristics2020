@@ -111,7 +111,7 @@ void my_main_4() {
 
     Solution* initial_solution = new Solution(data_set, sensor_placement);
 
-    Solution* best_solution = multipleNeighborhoodsSearch(1e6, initial_solution, 4);
+    Solution* best_solution = multipleNeighborhoodsSearch(5e5, initial_solution, 4);
 
     cout << "Done !" << endl;
 
@@ -144,4 +144,53 @@ void my_main_5() {
 
     delete initial_solution;
     delete best_solution;
+}
+
+void my_main_6() {
+    const string instances_folder = "/Users/taleboy/Desktop/metaheuristics2020/instances/";
+    const string solutions_folder = "/Users/taleboy/Desktop/metaheuristics2020/solutions";
+    const string new_solutions_folder = "/Users/taleboy/Desktop/metaheuristics2020/better_solutions";
+
+    const vector<pair<int, int> > radius_vector{
+        pair<int, int>(1, 1), pair<int, int>(1, 2), pair<int, int>(2, 2), pair<int, int>(2, 3)
+    };
+    const vector<string> instance_file_names{ "captANOR150_7_4.txt", "captANOR225_8_10.txt", "captANOR625_12_100.txt",
+                                              "captANOR900_15_20.txt", "captANOR1500_15_100.txt", "captANOR1500_18_100.txt" };
+    for (vector<string>::const_iterator file_name_iterator = instance_file_names.begin(); file_name_iterator != instance_file_names.end(); ++file_name_iterator) {
+        string instance_path = instances_folder + *file_name_iterator;
+        vector<pair<float, float> > coordinates = parseCoordinates(instance_path);
+        for (int reception_level = 1; reception_level <= 3; reception_level++) {
+            for (vector<pair<int, int> >::const_iterator radius_iterator = radius_vector.begin(); radius_iterator != radius_vector.end(); ++radius_iterator) {
+                float reception_radius = radius_iterator->first;
+                float communication_radius = radius_iterator->second;
+
+                cout << "Instance: " << *file_name_iterator << endl;
+                cout << "Reception level: " << reception_level << endl;
+                cout << "Reception radius: " << reception_radius << endl;
+                cout << "Communication radius: " << communication_radius << endl;
+
+                DataSet* data_set = new DataSet(communication_radius, reception_radius, reception_level, coordinates);
+                int number_targets = data_set->getNumberTargets();
+
+                string solution_path = solutions_folder + "/k_" + to_string(reception_level) + "/" + to_string((int)reception_radius) + "_" + to_string((int)communication_radius) + "/" + *file_name_iterator;
+                vector<bool> sensor_placement = parseSensorPlacement(solution_path, number_targets);
+
+                Solution* initial_solution = new Solution(data_set, sensor_placement);
+
+                Solution* best_solution = multipleNeighborhoodsSearch(5e5, initial_solution, 4);
+
+                cout << "Done !\n" << endl;
+
+                //cout << "Best solution admissible ? " << best_solution->checkAdmissible() << endl;
+
+                string new_solution_path = new_solutions_folder + "/k_" + to_string(reception_level) + "/" + to_string((int)reception_radius) + "_" + to_string((int)communication_radius);
+                writeSolutionToFile(new_solution_path, *file_name_iterator, best_solution);
+
+                delete initial_solution;
+                delete best_solution;
+                delete data_set;
+            }
+        }
+    }
+    return;
 }

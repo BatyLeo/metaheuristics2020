@@ -13,9 +13,9 @@ const radius_array = Array{Tuple{Int64, Int64}, 1}([(1, 1), (1, 2), (2, 2), (2, 
 const reception_levels_array = Array{Int, 1}([1, 2, 3])
 
 results_file = "inferior_bounds.txt"
-rm(results_file, force=true)
+# rm(results_file, force=true)
 
-for instance_file in instance_file_names
+for instance_file in instance_file_names[5:end]
     instance_path = "$instances_folder/$instance_file"
     # parsing the instance
     target_coordinates = parse_instance("$instance_path.txt")
